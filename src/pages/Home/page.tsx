@@ -18,6 +18,10 @@ export default function Home() {
     const [isScrolling, setIsScrolling] = useState(false);
     const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
+    // ========== TOUCH TRACKING (NEW) ==========
+    const touchStartY = useRef(0);
+    const touchStartX = useRef(0);
+
     const slides = [
         { id: 'hero', component: Hero },
         { id: 'about', component: About },
@@ -30,7 +34,30 @@ export default function Home() {
         { id: 'contact', component: Contact },
     ];
 
-    // Handle scroll wheel for horizontal carousel
+    // ========== NAVIGATION FUNCTIONS (NEW) ==========
+    const goToNextSlide = () => {
+        if (currentSlide < slides.length - 1) {
+            setCurrentSlide(currentSlide + 1);
+            setIsScrolling(true);
+            clearTimeout(scrollTimeoutRef.current);
+            scrollTimeoutRef.current = setTimeout(() => {
+                setIsScrolling(false);
+            }, 800);
+        }
+    };
+
+    const goToPreviousSlide = () => {
+        if (currentSlide > 0) {
+            setCurrentSlide(currentSlide - 1);
+            setIsScrolling(true);
+            clearTimeout(scrollTimeoutRef.current);
+            scrollTimeoutRef.current = setTimeout(() => {
+                setIsScrolling(false);
+            }, 800);
+        }
+    };
+
+    // ========== WHEEL EVENT (Desktop Mouse Scroll) ==========
     useEffect(() => {
         const handleWheel = (e: WheelEvent) => {
             if (!showMain) return;
@@ -45,26 +72,20 @@ export default function Home() {
             }
 
             if (isScrolling) return;
-            setIsScrolling(true);
 
             if (Math.abs(deltaY) > Math.abs(deltaX)) {
-                if (deltaY > 0 && currentSlide < slides.length - 1) {
-                    setCurrentSlide(currentSlide + 1);
-                } else if (deltaY < 0 && currentSlide > 0) {
-                    setCurrentSlide(currentSlide - 1);
+                if (deltaY > 0) {
+                    goToNextSlide();
+                } else if (deltaY < 0) {
+                    goToPreviousSlide();
                 }
             } else {
-                if (deltaX > 0 && currentSlide < slides.length - 1) {
-                    setCurrentSlide(currentSlide + 1);
-                } else if (deltaX < 0 && currentSlide > 0) {
-                    setCurrentSlide(currentSlide - 1);
+                if (deltaX > 0) {
+                    goToNextSlide();
+                } else if (deltaX < 0) {
+                    goToPreviousSlide();
                 }
             }
-
-            clearTimeout(scrollTimeoutRef.current);
-            scrollTimeoutRef.current = setTimeout(() => {
-                setIsScrolling(false);
-            }, 800);
         };
 
         if (showMain) {
@@ -73,21 +94,64 @@ export default function Home() {
         }
     }, [currentSlide, showMain, isScrolling, slides.length]);
 
-    // Handle keyboard navigation
+    // ========== KEYBOARD EVENTS (Arrow Keys) ==========
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if (!showMain) return;
 
-            if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && currentSlide < slides.length - 1) {
-                setCurrentSlide(currentSlide + 1);
+            if ((e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') && currentSlide < slides.length - 1) {
+                goToNextSlide();
             } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && currentSlide > 0) {
-                setCurrentSlide(currentSlide - 1);
+                goToPreviousSlide();
             }
         };
 
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [currentSlide, showMain, slides.length]);
+
+    // ========== TOUCH EVENTS (Mobile Swipe) - NEW! ==========
+    useEffect(() => {
+        const handleTouchStart = (e: TouchEvent) => {
+            if (!showMain) return;
+            touchStartY.current = e.touches[0].clientY;
+            touchStartX.current = e.touches[0].clientX;
+        };
+
+        const handleTouchEnd = (e: TouchEvent) => {
+            if (!showMain) return;
+            if (isScrolling) return;
+
+            const touchEndY = e.changedTouches[0].clientY;
+            const touchEndX = e.changedTouches[0].clientX;
+
+            const deltaY = touchStartY.current - touchEndY;
+            const deltaX = touchStartX.current - touchEndX;
+
+            const swipeThreshold = 50;
+
+            // Check if it's a vertical swipe (not horizontal)
+            if (Math.abs(deltaY) > Math.abs(deltaX)) {
+                if (deltaY > swipeThreshold) {
+                    // Swiped UP → Go to NEXT slide
+                    goToNextSlide();
+                } else if (deltaY < -swipeThreshold) {
+                    // Swiped DOWN → Go to PREVIOUS slide
+                    goToPreviousSlide();
+                }
+            }
+        };
+
+        if (showMain) {
+            window.addEventListener('touchstart', handleTouchStart, { passive: true });
+            window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+            return () => {
+                window.removeEventListener('touchstart', handleTouchStart);
+                window.removeEventListener('touchend', handleTouchEnd);
+            };
+        }
+    }, [currentSlide, showMain, isScrolling, slides.length]);
 
     return (
         <div className="page">

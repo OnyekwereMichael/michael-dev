@@ -45,7 +45,7 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
                     </div>
 
                     <div className={`counter-subtext ${showSubtext ? 'fade-in' : ''}`}>
-                        A journey through years of design
+                        A journey through years of building
                     </div>
                 </div>
 
