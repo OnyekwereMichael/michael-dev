@@ -37,11 +37,11 @@ export default function WorkDetail() {
             title: 'Slider',
             image: 'https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=500&h=500&fit=crop'
         },
-        {
-            id: 4,
-            title: 'Betahaus',
-            image: 'https://images.unsplash.com/photo-1549887534-7051a7b95e72?w=500&h=500&fit=crop'
-        },
+        // {
+        //     id: 4,
+        //     title: 'Betahaus',
+        //     image: 'https://images.unsplash.com/photo-1549887534-7051a7b95e72?w=500&h=500&fit=crop'
+        // },
     ];
 
     const currentImage = projects[hoveredProject].image;

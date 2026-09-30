@@ -36,7 +36,7 @@ export default function Hero() {
           <div className='mt-1'>ONYEKWERE</div>
         </h1>
 
-        <p className="intro mt-10!">
+        <p className="intro ">
           Software developer based in Lagos, Nigeria — focused on thoughtful, considered app experiences.
         </p>
       </div>
@@ -52,7 +52,7 @@ export default function Hero() {
           <div>Collaborations</div>
         </div>
 
-        <div className="scroll ">SCROLL</div>
+        {/* <div className="scroll ">SCROLL</div> */}
       </div>
     </main>
   );

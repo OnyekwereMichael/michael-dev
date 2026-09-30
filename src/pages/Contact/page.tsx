@@ -96,13 +96,17 @@ export default function Contact() {
     return (
         <main className="main relative w-full h-full min-h-screen p-[60px]">
             <div className="top max-sm:flex-col">
-                <h1 className="headline font-serif-2">
+                <h1 className="headline font-serif-2 max-sm:hidden">
                     <div>NEXT</div>
                     <div className='mt-1'>CHAPTER</div>
                 </h1>
+                <h1 className="headline font-serif-2 max-sm:block hidden">
+                    <div>NEXT CHAPTER</div>
+                    <div className='mt-1'></div>
+                </h1>
 
                 <motion.div className="xl:contact-socials sm:contact-socials max-sm:none  mt-5!" variants={itemVariants}>
-                    <div className="flex gap-8 ml-auto mt-6! max-sm:mt-0!">
+                    <div className="flex gap-8 ml-auto ">
                         {socials.map((social, idx) => (
                             <a
                                 key={idx}
@@ -129,7 +133,7 @@ export default function Contact() {
                     <div>Collaborations</div>
                 </div> */}
 
-                <div className="scroll text-lg! ">LET'S WORK TOGETHER</div>
+                <div className="scroll text-lg! ">LET'S CONNECT <span className="max-sm:hidden">THE DOTS...</span></div>
             </div>
         </main >
     );

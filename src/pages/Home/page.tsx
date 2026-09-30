@@ -10,6 +10,7 @@ import WhatIDo from '../WhatIDo/page';
 import Experience from '../Exp/page';
 import Contact from '../Contact/page';
 import ScrollIndicator from '../../component/ScrollIndicator';
+import NavigationButtons from '../../component/NavigationButton';
 
 
 export default function Home() {
@@ -181,10 +182,18 @@ export default function Home() {
                     </motion.div>
 
                     {/* Custom Scroll Indicator - Auto-adapts to theme */}
-                    <ScrollIndicator
+                    {/* <ScrollIndicator
                         currentSlide={currentSlide}
                         totalSlides={slides.length}
                         isDarkTheme={![1, 2, 3, 5].includes(currentSlide)} // Light: About, Works, WorkDetail, Experience
+                    /> */}
+
+                    <NavigationButtons
+                        onPrevious={goToPreviousSlide}
+                        onNext={goToNextSlide}
+                        currentSlide={currentSlide}
+                        totalSlides={slides.length}
+                        isDarkTheme={![1, 2, 3, 5].includes(currentSlide)}
                     />
                 </div>
             )}

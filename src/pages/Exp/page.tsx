@@ -94,10 +94,10 @@ export default function Experience() {
                         >
                             <motion.h3
                                 className={`experience-item ${hoveredExperience === idx ? 'experience-item--active' : 'experience-item--inactive'}`}
-                                animate={{
-                                    opacity: hoveredExperience === idx ? 1 : 0.35,
-                                    x: hoveredExperience === idx ? 10 : 0,
-                                }}
+                                // animate={{
+                                //     opacity: hoveredExperience === idx ? 1 : 0.35,
+                                //     x: hoveredExperience === idx ? 10 : 0,
+                                // }}
                                 transition={{ duration: 0.3 }}
                             >
                                 {exp.name}
