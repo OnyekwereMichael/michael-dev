@@ -9,7 +9,7 @@ import WorkDetail from '../WorkDetail/page';
 import WhatIDo from '../WhatIDo/page';
 import Experience from '../Exp/page';
 import Contact from '../Contact/page';
-import ScrollIndicator from '../../component/ScrollIndicator';
+
 import NavigationButtons from '../../component/NavigationButton';
 
 

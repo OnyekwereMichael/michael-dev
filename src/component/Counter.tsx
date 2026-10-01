@@ -7,6 +7,8 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
     const [showSubtext, setShowSubtext] = useState(false);
     const [isRolling, setIsRolling] = useState(true);
 
+    console.log('Next number', nextNumber);
+
     const currentYear = new Date().getFullYear();
     const targetYear = currentYear;
     const subtext = 'A journey through years of building';
