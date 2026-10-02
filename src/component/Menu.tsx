@@ -2,18 +2,19 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AboutDetail from './Aboutdetail';
 import WorksModal from './WorkModal';
-
+import ContactForm from './ContactForm';
 
 export default function Menu() {
     const [isOpen, setIsOpen] = useState(false);
     const [showAboutDetail, setShowAboutDetail] = useState(false);
     const [showWorksModal, setShowWorksModal] = useState(false);
+    const [showContactModal, setShowContactModal] = useState(false);
 
     const menuItems = [
         { number: '01', label: 'HOME', href: '#home' },
         { number: '02', label: 'ABOUT', action: 'about' },
         { number: '03', label: 'WORKS', action: 'works' },
-        { number: '04', label: 'CONTACT', href: '#contact' },
+        { number: '04', label: 'CONTACT', action: 'contact' },
     ];
 
     const socialLinks = [
@@ -63,6 +64,9 @@ export default function Menu() {
             setIsOpen(false);
         } else if (item.action === 'works') {
             setShowWorksModal(true);
+            setIsOpen(false);
+        } else if (item.action === 'contact') {
+            setShowContactModal(true);
             setIsOpen(false);
         } else if (item.href) {
             setIsOpen(false);
@@ -197,6 +201,13 @@ export default function Menu() {
             <AnimatePresence>
                 {showWorksModal && (
                     <WorksModal onClose={() => setShowWorksModal(false)} />
+                )}
+            </AnimatePresence>
+
+            {/* Contact Form Modal */}
+            <AnimatePresence>
+                {showContactModal && (
+                    <ContactForm onClose={() => setShowContactModal(false)} />
                 )}
             </AnimatePresence>
         </>

@@ -133,7 +133,7 @@ export default function Contact() {
                     <div>Collaborations</div>
                 </div> */}
 
-                <div className="scroll text-lg! ">LET'S CONNECT <span className="max-sm:hidden">THE DOTS...</span></div>
+                <div className="scroll text-lg! max-sm:mb-10!">LET'S CONNECT <span className="max-sm:hidden">THE DOTS...</span></div>
             </div>
         </main >
     );

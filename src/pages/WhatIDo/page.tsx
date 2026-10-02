@@ -45,9 +45,9 @@ export default function WhatIDo() {
             variants={containerVariants}
         >
             {/* Left Section - Process */}
-            <div className="whatido-left">
+            <div className="whatido-left max-sm:pt-6!">
                 <motion.div variants={itemVariants}>
-                    <h2 className="whatido-chapter">CHAPTER III</h2>
+                    <h2 className="whatido-chapter max-sm:py-0!">CHAPTER III</h2>
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="whatido-process max-sm:hidden!">

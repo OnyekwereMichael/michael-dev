@@ -59,7 +59,7 @@ export default function Experience() {
             variants={containerVariants}
         >
             <div className="experience-logo-section">
-                <motion.h2 variants={itemVariants} className="experience-chapter">
+                <motion.h2 variants={itemVariants} className="experience-chapter max-sm:pt-2!">
                     CHAPTER IV
                 </motion.h2>
 

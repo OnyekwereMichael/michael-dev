@@ -78,7 +78,7 @@ export default function WorkDetail() {
             {/* Right Section */}
             <div className="work-detail-right">
                 {/* Header Label */}
-                <motion.div variants={itemVariants} className="work-detail-label">
+                <motion.div variants={itemVariants} className="work-detail-label max-sm:mt-4!">
                     RELATED WORK
                 </motion.div>
 
