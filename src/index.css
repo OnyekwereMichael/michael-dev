@@ -70,6 +70,8 @@ body {
 }
 
 .rail {
+  position: relative;
+  z-index: 99999;          /* Always above every full-screen overlay */
   width: 60px;
   flex-shrink: 0;
   border-right: 1px solid var(--hairline);
@@ -101,6 +103,137 @@ body {
   background: var(--ink);
   display: block;
   transition: width 0.3s ease;
+}
+
+/* Menu overlay — every class is prefixed "mn-" so global styles can't interfere. */
+
+.mn-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;                /* Must be above contact-screen and all modals */
+  background: #262220;
+  overflow-y: auto;              /* only kicks in on very short landscape phones */
+}
+.mn-overlay, .mn-overlay *, .mn-overlay *::before, .mn-overlay *::after { box-sizing: border-box; }
+
+/* Header / links / socials share one column with generous, even margins */
+.mn-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-top: max(clamp(1.25rem, 4vh, 2.5rem), env(safe-area-inset-top));
+  padding-bottom: max(clamp(1.25rem, 4vh, 2.5rem), env(safe-area-inset-bottom));
+  padding-left: max(clamp(1.5rem, 9vw, 9rem), env(safe-area-inset-left));
+  padding-right: max(clamp(1.5rem, 5vw, 4rem), env(safe-area-inset-right));
+}
+
+.mn-head { display: flex; justify-content: flex-end; min-height: 2.5rem; align-items: center; }
+
+.mn-close {
+  background: none;
+  border: 0;
+  padding: 0.5rem 0;
+  color: #f3eee8;
+  font-family: var(--font-serif-2);
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+.mn-close:hover { opacity: 0.55; }
+
+/* Links sit in the vertical centre, never touching the top or bottom */
+.mn-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.25rem, 2.5vh, 1.5rem);
+  margin: 0;
+  padding: clamp(1rem, 4vh, 3rem) 0;
+  list-style: none;
+}
+
+.mn-link {
+  /* scales with BOTH width and height so 4 links always fit: phone, iPad, laptop */
+  --size: clamp(2.75rem, min(15vw, 11vh), 7rem);
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: #f3eee8;
+  font-family: var(--font-serif-2);
+  font-size: var(--size);
+  font-weight: 300;
+  line-height: 1.12;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.mn-link:disabled { cursor: default; }
+.mn-num {
+  flex: 0 0 auto;
+  width: 1.45em;                 /* fixed width keeps every label perfectly aligned */
+  letter-spacing: -0.02em;
+}
+.mn-label {
+  font-size: 0.68em;
+  color: rgba(243, 238, 232, 0.6);
+  letter-spacing: -0.005em;
+  transition: color 0.35s ease, transform 0.5s cubic-bezier(0.22, 0.85, 0.32, 1);
+}
+@media (hover: hover) {
+  .mn-link:hover .mn-label { color: #f3eee8; transform: translateX(0.2em); }
+}
+.mn-link:focus-visible { outline: 2px solid #f3eee8; outline-offset: 6px; }
+
+/* Socials: left on phones, right-aligned on larger screens */
+.mn-foot { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; justify-content: flex-start; }
+@media (min-width: 768px) { .mn-foot { justify-content: flex-end; } }
+.mn-social {
+  color: #f3eee8;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+}
+.mn-social:hover { opacity: 0.55; }
+
+/* Centre spinner */
+.mn-loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  pointer-events: none;
+}
+.mn-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid rgba(243, 238, 232, 0.18);
+  border-top-color: #f3eee8;
+  border-radius: 50%;
+  animation: mn-spin 0.85s linear infinite;
+}
+.mn-loader-text {
+  color: rgba(243, 238, 232, 0.6);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+}
+@keyframes mn-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mn-label { transition: color 0.2s ease; }
+  .mn-spinner { animation-duration: 1.8s; }
 }
 
 .rail-label {
@@ -146,8 +279,9 @@ body {
   flex-direction: column;
   justify-content: space-between;
   padding: 30px 40px;
-  height: 100vh;
   width: 100%;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -155,33 +289,39 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 40px;
   flex-wrap: wrap;
+  gap: 40px;
   flex: 0 0 auto;
 }
 
 .headline {
+  flex: 1;
+  min-width: 300px;
+  margin: 0;
   font-family: var(--font-serif-2);
   font-size: 7rem;
   line-height: 1.2;
   color: var(--ink);
-  flex: 1;
-  min-width: 300px;
 }
 
-.headline div {
-  overflow: hidden;
+.headline-line {
+  display: block;
+  white-space: nowrap;
+  will-change: transform, opacity;
 }
+.headline-line + .headline-line { margin-top: 0.04em; }
 
 .intro {
-  max-width: 350px;
-  font-size: 18.5px;
-  line-height: 1.5;
-  color: var(--ink);
+  max-width: 360px;
+  margin: 0;
   padding-top: 5px;
   flex-shrink: 0;
   font-family: var(--font-sans);
+  font-size: 18.5px;
   font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink);
+  will-change: transform, opacity;
 }
 
 .bottom {
@@ -203,15 +343,15 @@ body {
   font-family: var(--font-serif-2);
   font-size: 15.5px;
   font-weight: 400;
-
+  will-change: transform, opacity;
 }
-
 .bottom .col .muted {
+  min-height: 1.3em;
+  margin-top: 2px;
   color: var(--ink-dim);
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 400;
-  margin-top: 2px;
 }
 .bottom .col .mutedd {
   color: var(--ink-dim);
@@ -227,7 +367,6 @@ body {
   letter-spacing: 0.06em;
   font-weight: 300;
 }
-
 .whatido-main {
   flex: 1;
   display: grid;
@@ -681,7 +820,7 @@ body {
   font-family: var(--font-serif-2);
   font-size: 16px;
   font-weight: 400;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 
 }
   .scroll{
@@ -1434,11 +1573,11 @@ body {
 }
 
 .work-for-tag {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  font-weight: 600;
+  font-size: 12px;
+  /* letter-spacing: 0.11em; */
+  font-weight: 500;
   text-transform: uppercase;
-  font-family: var(--font-serif-2);
+  font-family: var(--font-sans);
   display: inline-block;
   margin-top: 6px;
 }
@@ -1482,8 +1621,6 @@ body {
 .about-detail-carousel-container {
   position: fixed;
   inset: 0;
-  height: 100vh;
-  width: 100%;
   z-index: 100;
   overflow: hidden;
 }
@@ -2170,7 +2307,7 @@ body {
   font-size: clamp(2.8rem, 8vw, 5rem);
   font-weight: 300;
   letter-spacing: 0.08em;
-  line-height: 1.2;
+  line-height: 1.3;
   color: #f3eee8;
   margin: 0;
   word-spacing: 0.1em;
@@ -3937,7 +4074,7 @@ body {
   border: 1px solid var(--hairline);
   color: var(--ink);
   padding: 14px 16px;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-family: var(--font-sans);
   border-radius: 4px;
   transition: all 0.3s cubic-bezier(0.22, 0.85, 0.32, 1);
@@ -4113,6 +4250,7 @@ body {
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.06em;
+ 
   text-transform: uppercase;
   color: var(--ink);
   opacity: 0.8;
@@ -4166,7 +4304,7 @@ body {
   .form-input,
   .form-textarea {
     padding: 12px 14px;
-    font-size: 16px; /* Prevents iOS zoom on input */
+    font-size: 16px; 
   }
 
   .submit-button {
@@ -4266,4 +4404,152 @@ body {
 
 .contact-screen::-webkit-scrollbar-thumb:hover {
   background: var(--ink-dim);
+}
+
+
+/* All Work screen — every class is prefixed "wm-" so global styles can't interfere. */
+
+.wm-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  background: #faf9f6;
+  color: #2e2b28;
+  overflow-y: auto;                 /* fallback only for very short screens */
+}
+.wm-screen, .wm-screen *, .wm-screen *::before, .wm-screen *::after { box-sizing: border-box; }
+
+/* One screen: header on top, grid centred in whatever space is left */
+.wm-container {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding:
+    max(clamp(1.25rem, 5vh, 3rem), env(safe-area-inset-top))
+    max(clamp(1.25rem, 5vw, 6rem), env(safe-area-inset-right))
+    max(clamp(1.25rem, 4vh, 2.5rem), env(safe-area-inset-bottom))
+    max(clamp(1.25rem, 5vw, 6rem), env(safe-area-inset-left));
+}
+
+/* ---------- Header ---------- */
+.wm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+.wm-title {
+  margin: 0;
+  color: #2e2b28;
+  font-family: var(--font-serif-2);
+  font-size: clamp(2.5rem, min(11vw, 14vh), 6.5rem);   /* scales with width AND height */
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.wm-space { display: inline-block; width: 0.28em; }
+
+.wm-header-right { display: flex; align-items: center; gap: clamp(0.75rem, 2.5vw, 2rem); }
+.wm-count {
+  color: #9a948d;
+  font-family: var(--font-serif-2);
+  font-size: clamp(1.6rem, min(5vw, 8vh), 4rem);
+  font-weight: 300;
+  line-height: 1;
+}
+.wm-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid rgba(46, 43, 40, 0.22);
+  border-radius: 50%;
+  background: transparent;
+  color: #2e2b28;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background-color 0.25s ease, rotate 0.35s ease;
+}
+.wm-close:hover { border-color: #2e2b28; background: rgba(46, 43, 40, 0.05); rotate: 90deg; }
+.wm-close:focus-visible, .wm-card:focus-visible { outline: 2px solid #2e2b28; outline-offset: 4px; }
+
+/* ---------- Grid ---------- */
+.wm-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vh, 2.25rem) clamp(1rem, 3vw, 2.5rem);
+  align-content: center;            /* keeps the cards vertically balanced */
+  padding-top: clamp(1.25rem, 4vh, 3rem);
+}
+@media (min-width: 1000px) {
+  .wm-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.wm-card { outline: none; cursor: pointer; }
+
+/* Hover: the others quietly dim, the hovered card comes forward */
+.wm-card-inner { transition: opacity 0.4s ease; }
+@media (hover: hover) {
+  .wm-grid:hover .wm-card:not(:hover) .wm-card-inner { opacity: 0.45; }
+}
+
+.wm-media {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: min(36vh, 340px);     /* shrinks on short screens so everything stays on one page */
+  overflow: hidden;
+  border-radius: 2px;
+  background: #ece9e3;
+}
+.wm-media-scale { width: 100%; height: 100%; }
+.wm-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s cubic-bezier(0.22, 0.85, 0.32, 1);
+}
+@media (hover: hover) {
+  .wm-card:hover .wm-img { transform: scale(1.06); }
+}
+
+/* ---------- Text ---------- */
+.wm-meta { display: flex; flex-direction: column; gap: 0.35rem; padding-top: clamp(0.6rem, 1.8vh, 1.1rem); }
+.wm-number {
+  font-family: var(--font-serif-2);
+  font-size: clamp(1.4rem, 3.2vh, 2rem);
+  font-weight: 300;
+  line-height: 1.2;
+}
+.wm-category {
+  color: #8b857e;
+  font-family: var(--font-sans);
+  font-size: clamp(0.62rem, 1.4vh, 0.75rem);
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+}
+.wm-name {
+  font-family: var(--font-serif-2);
+  font-size: clamp(1.05rem, 2.6vh, 1.4rem);
+  line-height: 1.3;
+}
+.wm-arrow {
+  display: inline-block;
+  margin-left: 0.4em;
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 0.85, 0.32, 1);
+}
+.wm-card:hover .wm-arrow, .wm-card:focus-visible .wm-arrow { opacity: 1; transform: translate(0, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wm-img, .wm-arrow, .wm-close { transition: none; }
 }

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Me from '../assets/WhatsApp Image 2026-09-23 at 11.58.00.jpeg';
 import PhilosophyScreen from './PhilosophyScreen';
 import CareerJourney from './CareerJourney';
+import NavigationButtons from './NavigationButton';
 
 
 export default function AboutDetail({ onClose }: { onClose: () => void }) {
@@ -121,7 +122,7 @@ export default function AboutDetail({ onClose }: { onClose: () => void }) {
 
                                 <motion.div
                                     variants={itemVariants}
-                                    className="about-detail-label max-sm:relative max-sm:top-3!"
+                                    className="about-detail-label max-sm:relative max-sm:top-3! text-[#000000]!"
                                 >
                                     ABOUT ME
                                 </motion.div>
@@ -130,7 +131,7 @@ export default function AboutDetail({ onClose }: { onClose: () => void }) {
                                     variants={itemVariants}
                                     className="about-detail-bio leading-8! max-sm:leading-7! max-sm:relative max-sm:top-3!"
                                 >
-                                    Hi, I'm <span>Michael</span> — a Software developer based in Lagos, Nigeria, with 5+ years of experience in mobile app development, web applications, and digital product design. I craft clear and enduring digital experiences with thoughtful approach to building intuitive interfaces that solve real problems.
+                                    Hi, I'm <span className='text-[#d97706]!'>Michael</span>, a software developer based in Lagos, Nigeria, with <span className="">3+ years</span> of experience building web applications and <span className="">2 years</span> in mobile development. More recently, I've been building AI agents. I focus on clear, intuitive interfaces and thoughtful engineering that solve real problems and hold up over time.
                                 </motion.p>
 
                                 <motion.div
@@ -139,7 +140,7 @@ export default function AboutDetail({ onClose }: { onClose: () => void }) {
                                 >
                                     <h3 className="about-detail-section-title">Interests</h3>
                                     <p className="about-detail-interests-text ">
-                                        Beyond design: Football, Watches, Aquariums, and Martial arts. I believe creativity thrives when we engage with diverse passions.
+                                        Beyond design: Football, Table Tennis, and Movies. I believe the best software comes from engaging with a wide range of interests.
                                     </p>
                                 </motion.div>
 
@@ -175,6 +176,14 @@ export default function AboutDetail({ onClose }: { onClose: () => void }) {
                         <CareerJourney />
                     </motion.div>
                 </motion.div>
+
+                <NavigationButtons
+                    onPrevious={() => currentScreen > 0 && setCurrentScreen(currentScreen - 1)}
+                    onNext={() => currentScreen < screens.length - 1 && setCurrentScreen(currentScreen + 1)}
+                    currentSlide={currentScreen}
+                    totalSlides={screens.length}
+                    isDarkTheme={false} /* Light theme */
+                />
             </div>
         </>
     );

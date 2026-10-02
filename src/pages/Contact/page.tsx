@@ -1,89 +1,53 @@
-// 'use client';
-// import { motion } from 'framer-motion';
-
-// export default function Contact() {
-// const containerVariants = {
-//     hidden: { opacity: 0 },
-//     visible: {
-//         opacity: 1,
-//         transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-//     },
-// };
-
-// const itemVariants = {
-//     hidden: { opacity: 0, y: 20 },
-//     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-// };
-
-// const socials = [
-//     { name: 'Instagram', url: 'https://instagram.com' },
-//     { name: 'Behance', url: 'https://behance.net' },
-//     { name: 'LinkedIn', url: 'https://linkedin.com' },
-// ];
-
-//     return (
-//         <motion.main
-//             className="contact-main"
-//             initial="hidden"
-//             whileInView="visible"
-//             variants={containerVariants}
-//         >
-//             {/* Top Right - Social Links */}
-//             <motion.div className="contact-socials" variants={itemVariants}>
-//                 {socials.map((social, idx) => (
-//                     <motion.a
-//                         key={idx}
-//                         href={social.url}
-//                         target="_blank"
-//                         rel="noopener noreferrer"
-//                         className="contact-social-link"
-//                         variants={itemVariants}
-//                         whileHover={{ opacity: 0.7 }}
-//                         transition={{ duration: 0.3 }}
-//                     >
-//                         {social.name}
-//                     </motion.a>
-//                 ))}
-//             </motion.div>
-
-//             {/* Center - Main Heading */}
-//             <motion.div className="contact-center" variants={itemVariants}>
-//                 <h1 className="contact-heading">NEXT<br />CHAPTER</h1>
-//             </motion.div>
-
-//             {/* Left Bottom - Contact Info */}
-//             <div className="contact-info">
-//                 <motion.p variants={itemVariants} className="contact-label">
-//                     CONTACT TO
-//                 </motion.p>
-//                 <motion.a
-//                     variants={itemVariants}
-//                     href="mailto:onyekweremichael55@gmail.com"
-//                     className="contact-email"
-//                 >
-//                     onyekweremichael55@gmail.com
-//                 </motion.a>
-//             </div>
-
-//             {/* Right Bottom - Tagline */}
-//             <motion.p variants={itemVariants} className="contact-tagline">
-//                 LET'S CRAFT SOMETHING THOUGHTFUL TOGETHER
-//             </motion.p>
-//         </motion.main>
-//     );
-// }
-
-
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
 
+const EASE = [0.22, 0.85, 0.32, 1] as const;
+const STEP = 0.25;    // gap between each step of the sequence (seconds)
+const START = 0.25;   // delay before the first element
 
 export default function Contact() {
+    const reduce = useReducedMotion();
+    const delayFor = (i: number) => START + i * STEP;
 
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    // Parent only flips hidden → visible; each child owns its motion + timing via `custom`
+    const containerVariants: Variants = { hidden: {}, visible: {} };
+
+    // Headline words rise out of an invisible mask, one after the other
+    const maskedRise: Variants = {
+        hidden: { y: reduce ? 0 : '115%' },
+        visible: (i: number) => ({
+            y: 0,
+            transition: { duration: 1.1, delay: delayFor(i), ease: EASE },
+        }),
+    };
+
+    // Social links pop out with a springy little overshoot
+    const pop: Variants = {
+        hidden: { opacity: 0, scale: reduce ? 1 : 0.4, y: reduce ? 0 : 12 },
+        visible: (i: number) => ({
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            transition: {
+                delay: delayFor(i),
+                opacity: { duration: 0.35, delay: delayFor(i) },
+                type: 'spring',
+                stiffness: 320,
+                damping: 14,
+                mass: 0.8,
+            },
+        }),
+    };
+
+    // Bottom blocks slide up from the bottom
+    const fromBottom: Variants = {
+        hidden: { opacity: 0, y: reduce ? 0 : 50 },
+        visible: (i: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: { duration: 1, delay: delayFor(i), ease: EASE },
+        }),
     };
 
     const socials = [
@@ -92,49 +56,65 @@ export default function Contact() {
         { name: 'LinkedIn', url: 'https://linkedin.com' },
     ];
 
-
+    /*
+     * Sequence:
+     *  0 NEXT · 1 CHAPTER (rise from the bottom, one by one)
+     *  2, 2.4, 2.8 social links pop out
+     *  4 contact block · 4.6 tagline (slide up from the bottom)
+     */
     return (
-        <main className="main relative w-full h-full min-h-screen p-[60px]">
+        <motion.main
+            className="main relative w-full h-full min-h-screen p-[60px]"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={containerVariants}
+        >
             <div className="top max-sm:flex-col">
-                <h1 className="headline font-serif-2 max-sm:hidden">
-                    <div>NEXT</div>
-                    <div className='mt-1'>CHAPTER</div>
-                </h1>
-                <h1 className="headline font-serif-2 max-sm:block hidden">
-                    <div>NEXT CHAPTER</div>
-                    <div className='mt-1'></div>
+                <h1 className="headline font-serif-2">
+                    <div style={{ overflow: 'hidden' }}>
+                        <motion.div variants={maskedRise} custom={0} style={{ willChange: 'transform' }}>
+                            NEXT
+                        </motion.div>
+                    </div>
+                    <div className="mt-1" style={{ overflow: 'hidden' }}>
+                        <motion.div variants={maskedRise} custom={1} style={{ willChange: 'transform' }}>
+                            CHAPTER
+                        </motion.div>
+                    </div>
                 </h1>
 
-                <motion.div className="xl:contact-socials sm:contact-socials max-sm:none  mt-5!" variants={itemVariants}>
-                    <div className="flex gap-8 ml-auto ">
+                <div className="xl:contact-socials sm:contact-socials max-sm:none mt-5!">
+                    <div className="flex gap-8 ml-auto">
                         {socials.map((social, idx) => (
-                            <a
+                            <motion.a
                                 key={idx}
                                 href={social.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-base font-light tracking-widest hover:opacity-70 transition-opacity duration-300"
+                                className="inline-block"
+                                variants={pop}
+                                custom={2 + idx * 0.4}
                             >
-                                {social.name}
-                            </a>
+                                <span className="text-base font-light tracking-widest hover:opacity-70 transition-opacity duration-300">
+                                    {social.name}
+                                </span>
+                            </motion.a>
                         ))}
                     </div>
-                </motion.div>
-            </div >
+                </div>
+            </div>
 
             <div className="bottom">
-                <div className="col text-[15px]! max-sm:text-[13px]!">
-                    <div className=''>CONTACT TO</div>
+                <motion.div variants={fromBottom} custom={4} className="col text-[15px]! max-sm:text-[13px]!">
+                    <div>CONTACT TO</div>
                     <div className="mutedd text-2xl! mt-2! text-white! max-sm:text-lg!">Onyekweremichael55@gmail.com</div>
-                </div>
+                </motion.div>
 
-                {/* <div className="col">
-                    <div>Open for</div>
-                    <div>Collaborations</div>
-                </div> */}
-
-                <div className="scroll text-lg! max-sm:mb-10!">LET'S CONNECT <span className="max-sm:hidden">THE DOTS...</span></div>
+                <motion.div variants={fromBottom} custom={4.6} className="scroll text-lg! max-sm:mb-12!">
+                    LET'S CONNECT <span className="max-sm:hidden">THE DOTS...</span>
+                </motion.div>
             </div>
-        </main >
+        </motion.main>
     );
 }

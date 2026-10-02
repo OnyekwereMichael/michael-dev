@@ -1,79 +1,49 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
+const START_YEAR = 2023;
+const STEP_MS = 1000;
 export default function Counter({ onComplete }: { onComplete: () => void }) {
-    const [displayNumber, setDisplayNumber] = useState('2023');
-    const [nextNumber, setNextNumber] = useState('2023');
+    const [displayNumber, setDisplayNumber] = useState(String(START_YEAR));
     const [showSubtext, setShowSubtext] = useState(false);
-    const [isRolling, setIsRolling] = useState(true);
 
-    console.log('Next number', nextNumber);
+    const onCompleteRef = useRef(onComplete);
+    useEffect(() => {
+        onCompleteRef.current = onComplete;
+    }, [onComplete]);
 
-    const currentYear = new Date().getFullYear();
-    const targetYear = currentYear;
+    const targetYear = new Date().getFullYear();
+    const steps = Math.max(targetYear - START_YEAR, 0);
     const subtext = 'A journey through years of building';
 
     useEffect(() => {
-        if (!isRolling) return;
+        let year = START_YEAR;
+        const timers: ReturnType<typeof setTimeout>[] = [];
 
-        const startYear = 2023;
-        const duration = 3800; // Total animation duration
-        const frameRate = 60; // frames per second
-        const totalFrames = (duration / 1000) * frameRate;
+        const interval = setInterval(() => {
+            year += 1;
+            setDisplayNumber(String(year));
 
-        let frameCount = 0;
-
-        const animate = () => {
-            const progress = frameCount / totalFrames;
-
-            if (progress < 1) {
-                // Easing function for smooth animation
-                const easeProgress = 1 - Math.pow(1 - progress, 3);
-
-                // Calculate current number with easing
-                const currentNum = Math.floor(
-                    startYear + (targetYear - startYear) * easeProgress
-                );
-
-                setDisplayNumber(String(currentNum));
-                setNextNumber(String(currentNum + 1));
-
-                frameCount++;
-                requestAnimationFrame(animate);
-            } else {
-                // Animation complete
-                setDisplayNumber(String(targetYear));
-                setNextNumber(String(targetYear + 1));
-                setIsRolling(false);
-
-                // Show subtext when counting is done
-                setTimeout(() => {
-                    setShowSubtext(true);
-                }, 200);
-
-                // Complete after showing subtext
-                setTimeout(() => {
-                    onComplete();
-                }, 3200);
+            if (year >= targetYear) {
+                clearInterval(interval);
+                timers.push(setTimeout(() => setShowSubtext(true), 200));
+                timers.push(setTimeout(() => onCompleteRef.current(), 3200));
             }
-        };
+        }, STEP_MS);
 
-        requestAnimationFrame(animate);
-    }, [targetYear, onComplete, isRolling]);
+        return () => {
+            clearInterval(interval);
+            timers.forEach(clearTimeout);
+        };
+    }, [targetYear]);
 
     // ========== TEXT ANIMATION VARIANTS ==========
     const charVariants: Variants = {
-        hidden: {
-            opacity: 0,
-            y: 15,
-        },
+        hidden: { opacity: 0, y: 15 },
         visible: {
             opacity: 1,
             y: 0,
-            transition: {
-                duration: 0.35,
-                ease: [0.22, 0.85, 0.32, 1],
-            },
+            transition: { duration: 0.35, ease: [0.22, 0.85, 0.32, 1] },
         },
     };
 
@@ -81,39 +51,17 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.06,
-                delayChildren: 0.15,
-            },
+            transition: { staggerChildren: 0.06, delayChildren: 0.15 },
         },
     };
 
-    // ========== CONTINUOUS ROLLING DIGIT ANIMATION ==========
+    // ========== ROLLING DIGIT ANIMATION (same timing for every year) ==========
+    const rollTransition = { duration: 0.4, ease: [0.22, 0.85, 0.32, 1] as const };
+
     const rollingDigitVariants: Variants = {
-        enter: {
-            y: 80,
-            opacity: 0,
-        },
-        center: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                type: 'spring',
-                stiffness: 70,
-                damping: 20,
-                mass: 1,
-            },
-        },
-        exit: {
-            y: -80,
-            opacity: 0,
-            transition: {
-                type: 'spring',
-                stiffness: 70,
-                damping: 20,
-                mass: 1,
-            },
-        },
+        enter: { y: 80, opacity: 0 },
+        center: { y: 0, opacity: 1, transition: rollTransition },
+        exit: { y: -80, opacity: 0, transition: rollTransition },
     };
 
     return (
@@ -123,10 +71,7 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
             animate={{ opacity: 1 }}
             exit={{
                 opacity: 0,
-                transition: {
-                    duration: 0.8,
-                    ease: [0.22, 0.85, 0.32, 1],
-                },
+                transition: { duration: 0.8, ease: [0.22, 0.85, 0.32, 1] },
             }}
         >
             <div className="counter-main">
@@ -134,18 +79,11 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
                     className="counter-content"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                        duration: 0.6,
-                        delay: 0.1,
-                        ease: [0.22, 0.85, 0.32, 1],
-                    }}
+                    transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 0.85, 0.32, 1] }}
                     exit={{
                         opacity: 0,
                         y: -80,
-                        transition: {
-                            duration: 0.8,
-                            ease: [0.22, 0.85, 0.32, 1],
-                        },
+                        transition: { duration: 0.8, ease: [0.22, 0.85, 0.32, 1] },
                     }}
                 >
                     <div className="counter-number font-serif-2">
@@ -166,7 +104,7 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
                     </div>
 
                     <motion.div
-                        className="counter-subtext"
+                        className="counter-subtext max-sm:text-sm!"
                         variants={containerVariants}
                         initial="hidden"
                         animate={showSubtext ? 'visible' : 'hidden'}
@@ -187,10 +125,7 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
                     className="counter-progress"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{
-                        duration: 3.8,
-                        ease: [0.22, 0.85, 0.32, 1],
-                    }}
+                    transition={{ duration: (steps * STEP_MS) / 1000, ease: 'linear' }}
                 >
                     <div className="counter-progress-bar"></div>
                 </motion.div>
