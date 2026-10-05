@@ -107,7 +107,7 @@ export default function WorkDetail() {
                         const isActive = index === hoveredProject;
 
                         return (
-                            // Outer element = entrance animation. Inner element = hover nudge (kept separate so they never fight)
+
                             <motion.div
                                 key={project.id}
                                 className="work-detail-project-item"
@@ -165,11 +165,18 @@ export default function WorkDetail() {
                     >
                         View All Work
                         <motion.span
-                            className="work-detail-arrow"
+                            className="work-detail-arrow max-sm:hidden"
                             whileHover={{ x: 3 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                         >
                             →
+                        </motion.span>
+                        <motion.span
+                            className="work-detail-arrow hidden max-sm:block"
+                            whileHover={{ x: 3 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                        >
+                            ↗
                         </motion.span>
                     </motion.a>
                 </motion.div>

@@ -4406,7 +4406,6 @@ body {
   background: var(--ink-dim);
 }
 
-
 /* All Work screen — every class is prefixed "wm-" so global styles can't interfere. */
 
 .wm-screen {
@@ -4420,33 +4419,29 @@ body {
 }
 .wm-screen, .wm-screen *, .wm-screen *::before, .wm-screen *::after { box-sizing: border-box; }
 
-/* One screen: header on top, grid centred in whatever space is left */
+.wm-fade { width: 100%; min-height: 100%; display: flex; }
+
+/* Header on top, grid centred in the middle, footer anchored at the bottom */
 .wm-container {
   width: 100%;
   max-width: 1440px;
-  min-height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   padding:
-    max(clamp(1.25rem, 5vh, 3rem), env(safe-area-inset-top))
-    max(clamp(1.25rem, 5vw, 6rem), env(safe-area-inset-right))
-    max(clamp(1.25rem, 4vh, 2.5rem), env(safe-area-inset-bottom))
-    max(clamp(1.25rem, 5vw, 6rem), env(safe-area-inset-left));
+    max(clamp(1.1rem, 4vh, 2.5rem), env(safe-area-inset-top))
+    max(clamp(1.25rem, 5vw, 5rem), env(safe-area-inset-right))
+    max(clamp(1rem, 3vh, 2rem), env(safe-area-inset-bottom))
+    max(clamp(1.25rem, 5vw, 5rem), env(safe-area-inset-left));
 }
 
 /* ---------- Header ---------- */
-.wm-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.5rem;
-}
+.wm-header { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
 .wm-title {
   margin: 0;
   color: #2e2b28;
   font-family: var(--font-serif-2);
-  font-size: clamp(2.5rem, min(11vw, 14vh), 6.5rem);   /* scales with width AND height */
+  font-size: clamp(2.4rem, min(10vw, 13vh), 6rem);
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: 0.01em;
@@ -4458,18 +4453,13 @@ body {
 .wm-count {
   color: #9a948d;
   font-family: var(--font-serif-2);
-  font-size: clamp(1.6rem, min(5vw, 8vh), 4rem);
+  font-size: clamp(1.5rem, min(4.5vw, 7vh), 3.5rem);
   font-weight: 300;
   line-height: 1;
 }
 .wm-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 2.6rem; height: 2.6rem; padding: 0;
   border: 1px solid rgba(46, 43, 40, 0.22);
   border-radius: 50%;
   background: transparent;
@@ -4478,78 +4468,193 @@ body {
   transition: border-color 0.25s ease, background-color 0.25s ease, rotate 0.35s ease;
 }
 .wm-close:hover { border-color: #2e2b28; background: rgba(46, 43, 40, 0.05); rotate: 90deg; }
-.wm-close:focus-visible, .wm-card:focus-visible { outline: 2px solid #2e2b28; outline-offset: 4px; }
+.wm-close:focus-visible, .wm-card:focus-visible { outline: 2px solid #2e2b28; outline-offset: 5px; }
 
 /* ---------- Grid ---------- */
 .wm-grid {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.25rem, 3vh, 2.25rem) clamp(1rem, 3vw, 2.5rem);
-  align-content: center;            /* keeps the cards vertically balanced */
-  padding-top: clamp(1.25rem, 4vh, 3rem);
+  gap: clamp(1.25rem, 3.5vh, 2.5rem) clamp(1rem, 2.5vw, 2.25rem);
+  align-content: center;
+  padding: clamp(1rem, 3vh, 2.5rem) 0;
 }
 @media (min-width: 1000px) {
   .wm-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
-.wm-card { outline: none; cursor: pointer; }
+.wm-card { outline: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.wm-card-inner { display: flex; flex-direction: column; transition: opacity 0.45s ease; }
 
-/* Hover: the others quietly dim, the hovered card comes forward */
-.wm-card-inner { transition: opacity 0.4s ease; }
+/* Hover: the other cards quietly dim */
 @media (hover: hover) {
-  .wm-grid:hover .wm-card:not(:hover) .wm-card-inner { opacity: 0.45; }
+  .wm-grid:hover .wm-card:not(:hover) .wm-card-inner { opacity: 0.4; }
 }
 
+/* Rule + number / category row */
+.wm-rule {
+  display: block;
+  height: 1px;
+  background: rgba(46, 43, 40, 0.25);
+  transform-origin: left center;
+  transition: background-color 0.4s ease;
+}
+.wm-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem;
+  padding: clamp(0.55rem, 1.5vh, 0.9rem) 0 clamp(0.6rem, 1.6vh, 1rem);
+}
+.wm-number {
+  font-family: var(--font-serif-2);
+  font-size: clamp(1.1rem, 2.6vh, 1.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  transition: color 0.4s ease;
+}
+.wm-category {
+  color: #8b857e;
+  font-family: var(--font-sans);
+  font-size: clamp(0.58rem, 1.3vh, 0.7rem);
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-align: right;
+}
+
+/* Image */
 .wm-media {
+  position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  max-height: min(36vh, 340px);     /* shrinks on short screens so everything stays on one page */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 2px;
   background: #ece9e3;
 }
 .wm-media-scale { width: 100%; height: 100%; }
 .wm-img {
-  display: block;
-  width: 100%;
-  height: 100%;
+  display: block; width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 0.9s cubic-bezier(0.22, 0.85, 0.32, 1);
+  user-select: none;
+  transition: transform 1s cubic-bezier(0.22, 0.85, 0.32, 1);
 }
-@media (hover: hover) {
-  .wm-card:hover .wm-img { transform: scale(1.06); }
+/* Fallback tile if a picture can't load */
+.wm-fallback {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(145deg, #3a3531, #262220);
+  color: rgba(243, 238, 232, 0.9);
+}
+.wm-fallback span { font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 300; }
+
+/* "View project" pill slides up on hover */
+.wm-view {
+  position: absolute; left: 0.75rem; bottom: 0.75rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  background: #faf9f6;
+  color: #2e2b28;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.22, 0.85, 0.32, 1);
+  pointer-events: none;
 }
 
-/* ---------- Text ---------- */
-.wm-meta { display: flex; flex-direction: column; gap: 0.35rem; padding-top: clamp(0.6rem, 1.8vh, 1.1rem); }
-.wm-number {
-  font-family: var(--font-serif-2);
-  font-size: clamp(1.4rem, 3.2vh, 2rem);
-  font-weight: 300;
-  line-height: 1.2;
-}
-.wm-category {
-  color: #8b857e;
-  font-family: var(--font-sans);
-  font-size: clamp(0.62rem, 1.4vh, 0.75rem);
-  letter-spacing: 0.12em;
-  line-height: 1.6;
-}
+/* Title */
+.wm-name-mask { padding-top: clamp(0.6rem, 1.6vh, 1rem); }
 .wm-name {
   font-family: var(--font-serif-2);
-  font-size: clamp(1.05rem, 2.6vh, 1.4rem);
+  font-size: clamp(1.15rem, 2.8vh, 1.6rem);
   line-height: 1.3;
 }
 .wm-arrow {
-  display: inline-block;
-  margin-left: 0.4em;
-  opacity: 0;
-  transform: translate(-6px, 6px);
+  display: inline-block; margin-left: 0.4em;
+  opacity: 0; transform: translate(-6px, 6px);
   transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 0.85, 0.32, 1);
+}
+
+@media (hover: hover) {
+  .wm-card:hover .wm-img { transform: scale(1.07); }
+  .wm-card:hover .wm-view { opacity: 1; transform: translateY(0); }
+  .wm-card:hover .wm-number { color: #d97706; }
+  .wm-card:hover .wm-rule { background: #d97706; }
 }
 .wm-card:hover .wm-arrow, .wm-card:focus-visible .wm-arrow { opacity: 1; transform: translate(0, 0); }
 
+/* ---------- Footer ---------- */
+.wm-footer {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding-top: clamp(0.75rem, 2vh, 1.25rem);
+  border-top: 1px solid rgba(46, 43, 40, 0.15);
+  color: #8b857e;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+}
+
+/* ---------- Spinner (shown while a project opens) ---------- */
+.wm-loader {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem;
+}
+.wm-spinner {
+  width: 3rem; height: 3rem;
+  border: 2px solid rgba(46, 43, 40, 0.15);
+  border-top-color: #2e2b28;
+  border-radius: 50%;
+  animation: wm-spin 0.85s linear infinite;
+}
+.wm-loader-text {
+  color: #8b857e;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+}
+@keyframes wm-spin { to { transform: rotate(360deg); } }
+
+/* ---------- Short desktop windows: landscape images keep everything on one screen ---------- */
+@media (min-width: 1000px) and (max-height: 700px) {
+  .wm-media { aspect-ratio: 4 / 3; }
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 640px) {
+  /* More air all round. It's fine for this to scroll a little on small phones rather than be cramped. */
+  .wm-container {
+    padding-top: max(1.75rem, env(safe-area-inset-top));
+    padding-bottom: max(1.75rem, env(safe-area-inset-bottom));
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+  }
+  .wm-grid {
+    gap: 2.75rem 1.25rem;
+    align-content: start;
+    padding: 2.5rem 0 3rem;
+  }
+
+  /* Number on top, category underneath, so nothing gets squeezed or cut off at the edge */
+  .wm-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 0.9rem 0 1.1rem;
+  }
+  .wm-number { font-size: 1.35rem; }
+  .wm-category { text-align: left; font-size: 0.62rem; letter-spacing: 0.1em; }
+
+  .wm-media { aspect-ratio: 5 / 4; }
+  .wm-name-mask { padding-top: 1rem; }
+  .wm-name { font-size: 1.2rem; }
+
+  .wm-footer { padding-top: 1.25rem; }
+  .wm-footer-hint { display: none; }
+  .wm-view { display: none; }
+  .wm-arrow { opacity: 1; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .wm-img, .wm-arrow, .wm-close { transition: none; }
+  .wm-img, .wm-arrow, .wm-close, .wm-view { transition: none; }
+  .wm-spinner { animation-duration: 1.8s; }
 }

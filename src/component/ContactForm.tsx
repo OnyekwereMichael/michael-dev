@@ -271,6 +271,22 @@ export default function ContactForm({ onClose }: { onClose?: () => void }) {
 
                         <AnimateStatusMessage status={submitStatus} />
                     </motion.form>
+
+                    <div className="contact-bottom mt-50! max-sm:flex hidden max-sm:mt-0! max-sm:mb-4!">
+                        <div className="contact-meta-item">
+                            <span className="contact-meta-label max-sm:text-sm!">Email</span>
+                            <span className="contact-meta-value">onyekweremichael55@gmail.com</span>
+                        </div>
+                        {/* <div className="contact-meta-item">
+                                <span className="contact-meta-label">Location</span>
+                                <span className="contact-meta-value">Lagos, Nigeria</span>
+                            </div> */}
+                        <div className="contact-meta-item">
+                            <span className="contact-meta-label max-sm:text-[12.5px]! max-sm:mb-0.5!">Status</span>
+                            <span className="contact-meta-value">Open for Collaborations</span>
+                        </div>
+                        {/* <p className="contact-tagline">LET'S BUILD SOMETHING GREAT</p> */}
+                    </div>
                 </motion.div>
 
                 {/* BOTTOM — metadata bar, same as Hero */}
