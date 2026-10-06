@@ -2,7 +2,7 @@
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { useState } from 'react';
 import vendorsapp from '../../assets/vendors.jpeg'
-import curi from '../../assets/Untitled design.png'
+import curi from '../../assets/WhatsApp Image 2026-10-06 at 10.35.14.jpeg'
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
 const STEP = 0.2;     // gap between each element in the sequence (seconds)
@@ -101,11 +101,10 @@ export default function WorkDetail() {
                     RELATED WORK
                 </motion.div>
 
-                {/* 4+ · Project links — slide in from the side, one by one */}
+
                 <div className="work-detail-projects">
                     {projects.map((project, index) => {
                         const isActive = index === hoveredProject;
-
                         return (
 
                             <motion.div
@@ -157,28 +156,28 @@ export default function WorkDetail() {
 
                 {/* Last · CTA — from the bottom */}
                 <motion.div variants={fromBottom} custom={CTA_INDEX} className="work-detail-cta">
-                    <motion.a
-                        href="#all-work"
+                    <motion.button
                         className="work-detail-link"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-works'))}
                         whileHover={{ x: 6 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     >
                         View All Work
                         <motion.span
-                            className="work-detail-arrow max-sm:hidden"
+                            className="work-detail-arrow max-sm:hidden!"
                             whileHover={{ x: 3 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                         >
                             →
                         </motion.span>
                         <motion.span
-                            className="work-detail-arrow hidden max-sm:block"
+                            className="work-detail-arrow hidden! max-sm:block!"
                             whileHover={{ x: 3 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                         >
                             ↗
                         </motion.span>
-                    </motion.a>
+                    </motion.button>
                 </motion.div>
             </div>
         </motion.main>

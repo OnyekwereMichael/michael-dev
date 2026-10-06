@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useAnimationControls, useReducedMotion, type Variants } from 'framer-motion';
-import curi from '../assets/Untitled design.png';
+import curi from '../assets/WhatsApp Image 2026-10-06 at 10.35.14.jpeg';
 import vendorsapp from '../assets/vendors.jpeg';
 import veriscore from '../assets/veriscore.png';
 import ProjectDetail, { type Project } from './ProjectDetail';
@@ -15,18 +15,18 @@ const SPINNER_MS = 1400;
 const projects: Project[] = [
     {
         number: '01', category: 'E-LEARNING', year: '2026', title: 'Curi', image: curi,
-        overview: 'A digital learning experience designed to make the education process simpler, clearer, and more accessible for everyone.',
-        client: 'Curi Education', preview: '#', scope: 'Frontend Developer', nextProject: 'Vendors app',
+        overview: 'Curi is a daily learning app that helps people grow their vocabulary and learn something new in just a few minutes a day. Built for everyone, from students to professionals.',
+        client: 'Personal Project', preview: 'https://www.trycuri.app/', scope: 'Frontend Developer', nextProject: 'Vendors app',
     },
     {
         number: '02', category: 'E-COMMERCE', year: '2026', title: 'Vendors app', image: vendorsapp,
-        overview: 'A platform connecting vendors with buyers, enhancing the e-commerce experience with streamlined inventory management.',
-        client: 'Vendors Inc.', preview: '#', scope: 'Frontend Developer', nextProject: 'Veriscore',
+        overview: 'A comprehensive business management platform designed to help small and medium-sized businesses launch, manage, and scale with confidence.',
+        client: 'Pepple Rex', preview: 'https://www.tryvendorsapp.com/', scope: 'Frontend Developer', nextProject: 'Veriscore',
     },
     {
         number: '03', category: 'FINTECH', year: '2026', title: 'Veriscore', image: veriscore,
         overview: 'A financial scoring tool designed to give clear insights into credit and lending potentials.',
-        client: 'Veriscore Finance', preview: '#', scope: 'Frontend Developer', nextProject: 'Betahaus',
+        client: 'Mr.Segun Oyenuga', preview: 'https://veriscore.app/', scope: 'Frontend Developer', nextProject: 'Betahaus',
     },
     {
         number: '04', category: 'REAL ESTATE', year: '2026', title: 'Betahaus',
@@ -261,7 +261,6 @@ export default function WorksModal({ onClose }: { onClose?: () => void }) {
                             })}
                         </div>
 
-                        {/* ---------- Footer ---------- */}
                         <motion.footer
                             className="wm-footer "
                             variants={fromBottom} initial="hidden" animate="visible" custom={1.9}

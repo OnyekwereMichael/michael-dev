@@ -182,7 +182,7 @@ export default function AboutDetail({ onClose }: { onClose: () => void }) {
                     onNext={() => currentScreen < screens.length - 1 && setCurrentScreen(currentScreen + 1)}
                     currentSlide={currentScreen}
                     totalSlides={screens.length}
-                    isDarkTheme={false} /* Light theme */
+                    isDarkTheme={currentScreen > 0} /* Dark on philosophy/career screens */
                 />
             </div>
         </>

@@ -53,7 +53,7 @@ export default function Contact() {
     const socials = [
         { name: 'X', url: 'https://behance.net' },
         { name: 'Instagram', url: 'https://instagram.com' },
-        { name: 'LinkedIn', url: 'https://linkedin.com' },
+        { name: 'LinkedIn', url: 'https://www.linkedin.com/in/michael-onyekwere/' },
     ];
 
     /*

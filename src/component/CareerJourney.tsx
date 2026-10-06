@@ -72,7 +72,7 @@ export default function CareerJourney() {
             <div className="career-journey-left">
                 <div className="career-journey-left-content">
                     <motion.div variants={fromBottom} custom={0} className="career-journey-accent max-sm:hidden!">
-                        ―
+
                     </motion.div>
 
                     <h1 className="career-journey-title" aria-label="Career Journey">

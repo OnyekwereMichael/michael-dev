@@ -90,9 +90,12 @@ export default function About() {
                 <div className="about-portrait-section">
                     {/* 4 · More about me — from the bottom */}
                     <motion.div variants={fromBottom} custom={3} className="about-cta">
-                        <a href="#more" className="more-link text-[#2e2b28]! ">
+                        <button
+                            className="more-link text-[#2e2b28]!"
+                            onClick={() => window.dispatchEvent(new CustomEvent('open-about'))}
+                        >
                             More about me <span className="arrow text-[#2e2b28]!">→</span>
-                        </a>
+                        </button>
                     </motion.div>
 
                     {/* 5 · Portrait — from the bottom */}

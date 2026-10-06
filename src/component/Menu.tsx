@@ -14,7 +14,7 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-    { number: '01', label: 'HOME', href: '#home' },
+    { number: '01', label: 'HOME', href: 'home' },
     { number: '02', label: 'ABOUT', action: 'about' },
     { number: '03', label: 'WORKS', action: 'works' },
     { number: '04', label: 'CONTACT', action: 'contact' },
@@ -23,7 +23,7 @@ const menuItems: MenuItem[] = [
 const socialLinks = [
     { label: 'Instagram', href: 'https://instagram.com' },
     { label: 'Behance', href: 'https://behance.net' },
-    { label: 'LinkedIn', href: 'https://linkedin.com' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/michael-onyekwere/' },
 ];
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
@@ -86,6 +86,19 @@ export default function Menu() {
 
     useEffect(() => () => clearTimeout(timer.current), []);
 
+    // "More about me" button on the About section triggers this
+    useEffect(() => {
+        const handler = () => setShowAboutDetail(true);
+        window.addEventListener('open-about', handler);
+        return () => window.removeEventListener('open-about', handler);
+    }, []);
+    // "More about me" button on the About section triggers this
+    useEffect(() => {
+        const handler = () => setShowWorksModal(true);
+        window.addEventListener('open-works', handler);
+        return () => window.removeEventListener('open-works', handler);
+    }, []);
+
     const closeMenu = useCallback(() => {
         if (pending) return;
         clearTimeout(timer.current);
@@ -109,17 +122,28 @@ export default function Menu() {
     const handleItem = (item: MenuItem) => {
         if (pending) return;
 
-        // Home: just drop the menu away, then scroll to the section
+        // HOME: Navigate to home page or scroll to home section
         if (!item.action) {
             closeMenu();
             timer.current = setTimeout(() => {
-                const el = item.href ? document.querySelector(item.href) : null;
-                el ? el.scrollIntoView({ behavior: 'smooth' }) : item.href && (window.location.hash = item.href);
+                // First, try to find a home element on the current page
+                const homeElement = item.href ? document.querySelector(item.href) : null;
+
+                if (homeElement) {
+                    // If home element exists, scroll to it smoothly
+                    homeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else if (item.href) {
+                    // If no element found, use hash navigation
+                    window.location.hash = item.href;
+                } else {
+                    // Fallback: navigate to root
+                    window.location.href = '/';
+                }
             }, 900);
             return;
         }
 
-        // Others: links fade away → spinner → open the screen
+        // ABOUT, WORKS, CONTACT: Show the respective modal/screen
         setPending(item);
         timer.current = setTimeout(() => {
             if (item.action === 'about') setShowAboutDetail(true);
