@@ -1,7 +1,6 @@
 'use client';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import myself from '../../assets/WhatsApp Image 2026-09-23 at 11.58.00.jpeg'
-import resume from '../../assets/Michael.pdf';
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
 const STEP = 0.28;   // gap between each element in the sequence (seconds)

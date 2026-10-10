@@ -2,9 +2,7 @@
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { useState } from 'react';
 import jc from '../../assets/jc_logo.svg'
-import vendors from '../../assets/vendors.jpeg'
 import veriscore from '../../assets/Group.svg'
-import devp from '../../assets/logo-dark.webp'
 import jdc from '../../assets/jdc_logo.png'
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
