@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import resume from '../assets/Michael.pdf';
 
 function useLagosTime() {
   const [time, setTime] = useState('');
@@ -56,11 +57,29 @@ export default function Hero() {
             ONYEKWERE
           </motion.span>
         </h1>
-
+<div className='flex flex-col!'>
         {/* 3. intro slides in from the left (short travel so it never crosses the name) */}
         <motion.p className="intro" {...reveal({ x: -70 }, 1.1, 1)}>
           Software developer based in Lagos, Nigeria, building thoughtful web & mobile apps alongside intelligent AI agents.
         </motion.p>
+
+        {/* Action Buttons */}
+        <motion.div className="hero-actions" {...reveal({ y: 20 }, 1.3, 1)}>
+          <a
+            href="mailto:Onyekweremichael55@gmail.com?subject=Booking%20a%20Call"
+            className="hero-btn"
+          >
+            Book a Call
+          </a>
+          <a
+            href={resume}
+            download="Michael_Onyekwere_Resume.pdf"
+            className="hero-btn hero-btn--outline max-sm:mt-1!"
+          >
+            Download Resume
+          </a>
+        </motion.div>
+        </div>
       </div>
 
       <div className="bottom">
@@ -70,7 +89,7 @@ export default function Hero() {
           <div className="muted">{localTime}</div>
         </motion.div>
 
-        <motion.div className="col" {...reveal({ y: 60 }, 1.7, 1)}>
+        <motion.div className="col max-sm:hidden" {...reveal({ y: 60 }, 1.7, 1)}>
           <div>Open for</div>
           <div>Collaborations</div>
         </motion.div>

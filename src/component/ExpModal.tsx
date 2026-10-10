@@ -1,43 +1,54 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useAnimationControls, useReducedMotion, type Variants } from 'framer-motion';
-import curi from '../assets/MacBook-on-Modern-Eames-Style-Chair-Presentation-Scene-PSD-Mockuph.jpg.jpeg';
-import vendorsapp from '../assets/WhatsApp Image 2026-10-10 at 21.37.07.jpeg';
-import veriscore from '../assets/03-Free-MacBook-Pro-Mockup-Low-Perspective.jpg.jpeg';
+import jdc from '../assets/jdc_logo.png';
+import jc from '../assets/jc_logo.svg';
+import veriscore from '../assets/Group.svg';
+import devp from '../assets/logo-dark.webp';
+import glued from '../assets/Glued.png'
 import ProjectDetail, { type Project } from './ProjectDetail';
-import whitelist from '../assets/whitelist.svg'
+import curi from '../assets/WhatsApp Image 2026-10-06 at 10.35.14.jpeg';
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
-const TITLE = 'ALL WORK';
+const TITLE = 'EXPERIENCE';
 const KEY_STEP = 0.08;      
 const cardDelay = (i: number) => 0.9 + i * 0.14; 
 const SPINNER_MS = 1400;
 
 const projects: Project[] = [
     {
-        number: '01', category: 'E-LEARNING', year: '2026', title: 'Curi', image: curi,
-        overview: 'Curi is a daily learning app that helps people grow their vocabulary and learn something new in just a few minutes a day. Built for everyone, from students to professionals.',
-        client: 'Personal Project', preview: 'https://www.trycuri.app/', scope: 'Frontend Developer', nextProject: 'Vendors app',
+        number: '01', category: 'CONSULTING', year: '2026', title: 'JDC', image: jdc,
+        overview: 'JosonSeth Digital Consulting (JDC) is a digital transformation firm helping businesses scale through strategy, design, and technology.',
+        client: 'JosonSeth', preview: 'http://consulting.josonseth.com/', scope: 'Frontend Developer', nextProject: 'James Chase',
     },
     {
-        number: '02', category: 'E-COMMERCE', year: '2026', title: 'Vendors app', image: vendorsapp,
-        overview: 'A comprehensive business management platform designed to help small and medium-sized businesses launch, manage, and scale with confidence.',
-        client: 'Pepple Rex', preview: 'https://www.tryvendorsapp.com/', scope: 'Frontend Developer', nextProject: 'Veriscore',
+        number: '02', category: 'CREATIVE AGENCY', year: '2026', title: 'James Chase', image: jc,
+        overview: 'James Chase is a creative branding and design agency delivering premium visual identities and digital experiences.',
+        client: 'James Chase Ltd', preview: 'https://james-chase.com/', scope: 'Frontend Developer', nextProject: 'Veriscore',
     },
     {
         number: '03', category: 'FINTECH', year: '2026', title: 'Veriscore', image: veriscore,
         overview: 'A financial scoring tool designed to give clear insights into credit and lending potentials.',
-        client: 'Mr.Segun Oyenuga', preview: 'https://veriscore.app/', scope: 'Frontend Developer', nextProject: 'Betahaus',
+        client: 'Mr. Segun Oyenuga', preview: 'https://veriscore.app/', scope: 'Frontend Developer', nextProject: 'DevPilot',
+    },
+     {
+        number: '04', category: 'Data-driven insights', year: '2026', title: 'Glued', image: glued,
+        overview: 'DevPilot is an AI-powered developer productivity tool that helps teams ship faster with intelligent code assistance and workflow automation.',
+        client: 'DevPilot Inc.', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'JDC',
     },
     {
-        number: '04', category: 'REAL ESTATE', year: '2026', title: 'Whitelist',
-        image: whitelist,
-        overview: "Whether you're searching for your dream home or looking to rent out a property, Whitelist makes the process seamless and efficient",
-        client: 'Mr Ebuka & Manuel', preview: '#', scope: 'Web Developer', nextProject: 'Evo Money',
+        number: '05', category: 'DEV TOOLS', year: '2026', title: 'DevPilot', image: devp,
+        overview: 'DevPilot is an AI-powered developer productivity tool that helps teams ship faster with intelligent code assistance and workflow automation.',
+        client: 'DevPilot Inc.', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'JDC',
     },
+    {
+        number: '06', category: 'E-LEARNING', year: '2026', title: 'Curi', image: curi,
+        overview: 'Curi is a daily learning app that helps people grow their vocabulary and learn something new in just a few minutes a day.',
+        client: 'Personal Project', preview: 'https://www.trycuri.app/', scope: 'Frontend Developer', nextProject: 'JDC',
+    },
+   
 ];
 
-/* Image with a graceful fallback: if a picture fails to load, show a styled monogram tile instead of a broken icon */
 function ProjectImage({ src, title }: { src: string; title: string }) {
     const [failed, setFailed] = useState(false);
     if (failed) {
@@ -50,7 +61,7 @@ function ProjectImage({ src, title }: { src: string; title: string }) {
     return <img src={src} alt={title} className="wm-img" onError={() => setFailed(true)} draggable={false} />;
 }
 
-export default function WorksModal({ onClose }: { onClose?: () => void }) {
+export default function ExpModal({ onClose }: { onClose?: () => void }) {
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [pendingProject, setPendingProject] = useState<Project | null>(null);
     const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -148,7 +159,7 @@ export default function WorksModal({ onClose }: { onClose?: () => void }) {
                 className="wm-screen"
                 role="dialog"
                 aria-modal="true"
-                aria-label="All work"
+                aria-label="All Experience"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.4, ease: EASE } }}
@@ -242,7 +253,7 @@ export default function WorksModal({ onClose }: { onClose?: () => void }) {
                                             </div>
 
                                             {/* image */}
-                                            <motion.div className="wm-media" variants={reveal} custom={d + 0.15}>
+                                            <motion.div className="wm-media wm-media--exp" variants={reveal} custom={d + 0.15}>
                                                 <motion.div className="wm-media-scale" variants={settle} custom={d + 0.15}>
                                                     <ProjectImage src={p.image as string} title={p.title} />
                                                 </motion.div>
@@ -266,8 +277,8 @@ export default function WorksModal({ onClose }: { onClose?: () => void }) {
                             className="wm-footer "
                             variants={fromBottom} initial="hidden" animate="visible" custom={1.9}
                         >
-                            <span className='max-sm:mb-5!'>SELECTED WORK — 2026</span>
-                            <span className="wm-footer-hint">Select a project to explore</span>
+                            <span className='max-sm:mb-5!'>SELECTED EXPERIENCE — 2026</span>
+                            <span className="wm-footer-hint">Select a company to explore</span>
                         </motion.footer>
                     </div>
                 </motion.div>

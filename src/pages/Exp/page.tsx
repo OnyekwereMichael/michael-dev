@@ -1,22 +1,22 @@
 'use client';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { useState } from 'react';
-import jc from '../../assets/jc4.png'
+import jc from '../../assets/jc_logo.svg'
 import vendors from '../../assets/vendors.jpeg'
-import veriscore from '../../assets/veriscore.png'
-import devp from '../../assets/Untitled design (1).png'
+import veriscore from '../../assets/Group.svg'
+import devp from '../../assets/logo-dark.webp'
+import jdc from '../../assets/jdc_logo.png'
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
-const STEP = 0.2;     // gap between each element in the sequence (seconds)
-const START = 0.25;   // delay before the first element
-const SIDE = 80;      // slide-in distance in px. Positive = from the right, negative = from the left.
+const STEP = 0.2;
+const START = 0.25; 
+const SIDE = 80;     
 
 export default function Experience() {
     const [hoveredExperience, setHoveredExperience] = useState(0);
     const reduce = useReducedMotion();
     const delayFor = (i: number) => START + i * STEP;
 
-    // Parent only flips hidden → visible; each child owns its direction + timing via `custom`
     const containerVariants: Variants = { hidden: {}, visible: {} };
 
     // "CHAPTER IV" rises out of an invisible mask
@@ -45,13 +45,13 @@ export default function Experience() {
     };
 
     const experiences = [
-        { name: 'James Chase', logo: jc },
-        { name: 'Veriscore', logo: veriscore },
-        { name: 'DevPilot', logo: devp },
-        { name: 'Vendors App', logo: vendors },
+        { name: 'JDC', logo: jdc, url: 'http://consulting.josonseth.com/' },
+        { name: 'James Chase', logo: jc, url: 'https://james-chase.com/' },
+        { name: 'Veriscore', logo: veriscore, url: 'https://veriscore.app/' },
+        // { name: 'DevPilot', logo: devp, url: 'https://devpilot.io/' },
+        // { name: 'Vendors App', logo: vendors, url: '#' },
     ];
 
-    // Used only when the logo swaps on hover (unchanged behaviour)
     const imageVariants: Variants = {
         hidden: { opacity: 0, scale: 0.8 },
         visible: {
@@ -64,6 +64,7 @@ export default function Experience() {
 
     // Sequence: 0 chapter · 1 logo · 2 label · 3… each experience (one by one)
     const LIST_START = 3;
+    const CTA_INDEX = LIST_START + experiences.length;
 
     return (
         <motion.main
@@ -88,7 +89,15 @@ export default function Experience() {
 
                 {/* 2 · Logo — rises from the bottom.
                     Outer element = entrance. Inner keyed element = the hover swap, so the two never fight. */}
-                <motion.div variants={fromBottom} custom={1} className="experience-logo-container">
+                <motion.div 
+                    variants={fromBottom} 
+                    custom={1} 
+                    className="experience-logo-container"
+                    style={{
+                        backgroundColor: experiences[hoveredExperience].name === 'DevPilot' ? '#000000' : undefined,
+                        transition: 'background-color 0.3s ease'
+                    }}
+                >
                     <motion.div
                         key={hoveredExperience}
                         variants={imageVariants}
@@ -114,11 +123,15 @@ export default function Experience() {
                 {/* 4+ · Experience links — slide in from the side, one by one */}
                 <div className="experience-list">
                     {experiences.map((exp, idx) => (
-                        <motion.div
+                        <motion.a
+                            href={exp.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             key={idx}
                             variants={fromSide}
                             custom={LIST_START + idx}
                             className="experience-item-wrapper"
+                            style={{ textDecoration: 'none' }}
                             onMouseEnter={() => setHoveredExperience(idx)}
                             onMouseLeave={() => setHoveredExperience(0)}
                         >
@@ -138,9 +151,35 @@ export default function Experience() {
                                     ↗
                                 </motion.div>
                             )}
-                        </motion.div>
+                        </motion.a>
                     ))}
                 </div>
+
+                {/* Last · CTA — from the bottom */}
+                <motion.div variants={fromBottom} custom={CTA_INDEX} className="work-detail-cta" style={{ marginTop: '50px' }}>
+                    <motion.button
+                        className="work-detail-link"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-exp'))}
+                        whileHover={{ x: 6 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    >
+                        See All Experience 
+                        <motion.span
+                            className="work-detail-arrow max-sm:hidden!"
+                            whileHover={{ x: 3 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                        >
+                            →
+                        </motion.span>
+                        <motion.span
+                            className="work-detail-arrow hidden! max-sm:block!"
+                            whileHover={{ x: 3 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                        >
+                            ↗
+                        </motion.span>
+                    </motion.button>
+                </motion.div>
             </div>
         </motion.main>
     );

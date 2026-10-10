@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^5.0.3",
     "@tailwindcss/vite": "^4.3.3",
+    "formik": "^2.4.9",
     "framer-motion": "^13.4.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",

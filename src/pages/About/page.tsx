@@ -1,6 +1,7 @@
 'use client';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import myself from '../../assets/WhatsApp Image 2026-09-23 at 11.58.00.jpeg'
+import resume from '../../assets/Michael.pdf';
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
 const STEP = 0.28;   // gap between each element in the sequence (seconds)
@@ -88,14 +89,21 @@ export default function About() {
                 </motion.div>
 
                 <div className="about-portrait-section">
-                    {/* 4 · More about me — from the bottom */}
-                    <motion.div variants={fromBottom} custom={3} className="about-cta">
+                    {/* 4 · More about me & Resume — from the bottom */}
+                    <motion.div variants={fromBottom} custom={3} className="about-cta flex gap-4 max-sm:flex-col items-start">
                         <button
                             className="more-link text-[#2e2b28]!"
                             onClick={() => window.dispatchEvent(new CustomEvent('open-about'))}
                         >
                             More about me <span className="arrow text-[#2e2b28]!">→</span>
                         </button>
+                        {/* <a
+                            href={resume}
+                            download="Michael_Onyekwere_Resume.pdf"
+                            className="more-link text-[#2e2b28]! max-sm:mt-2"
+                        >
+                            Download Resume <span className="arrow text-[#2e2b28]!">↓</span>
+                        </a> */}
                     </motion.div>
 
                     {/* 5 · Portrait — from the bottom */}

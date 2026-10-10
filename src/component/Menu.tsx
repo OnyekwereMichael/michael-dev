@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import AboutDetail from './Aboutdetail';
 import WorksModal from './WorkModal';
+import ExpModal from './ExpModal';
 import ContactForm from './ContactForm';
 
 
@@ -21,8 +22,8 @@ const menuItems: MenuItem[] = [
 ];
 
 const socialLinks = [
-    { label: 'Instagram', href: 'https://instagram.com' },
-    { label: 'Behance', href: 'https://behance.net' },
+    { label: 'X', href: 'https://x.com/itzmichael_dev?s=11' },
+    { label: 'Instagram', href: 'https://www.instagram.com/michael_dev007?xtok=MW9mMTEwMW9pbWxncw%3D%3D&utm_source=qr' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/michael-onyekwere/' },
 ];
 
@@ -81,6 +82,7 @@ export default function Menu() {
     const [fastExit, setFastExit] = useState(false);
     const [showAboutDetail, setShowAboutDetail] = useState(false);
     const [showWorksModal, setShowWorksModal] = useState(false);
+    const [showExpModal, setShowExpModal] = useState(false);
     const [showContactModal, setShowContactModal] = useState(false);
     const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -97,6 +99,12 @@ export default function Menu() {
         const handler = () => setShowWorksModal(true);
         window.addEventListener('open-works', handler);
         return () => window.removeEventListener('open-works', handler);
+    }, []);
+    // "See All Experience" button on the Experience section triggers this
+    useEffect(() => {
+        const handler = () => setShowExpModal(true);
+        window.addEventListener('open-exp', handler);
+        return () => window.removeEventListener('open-exp', handler);
     }, []);
 
     const closeMenu = useCallback(() => {
@@ -221,6 +229,9 @@ export default function Menu() {
             </AnimatePresence>
             <AnimatePresence>
                 {showWorksModal && <WorksModal onClose={() => setShowWorksModal(false)} />}
+            </AnimatePresence>
+            <AnimatePresence>
+                {showExpModal && <ExpModal onClose={() => setShowExpModal(false)} />}
             </AnimatePresence>
             <AnimatePresence>
                 {showContactModal && <ContactForm onClose={() => setShowContactModal(false)} />}

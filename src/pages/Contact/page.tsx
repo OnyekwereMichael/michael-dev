@@ -51,8 +51,8 @@ export default function Contact() {
     };
 
     const socials = [
-        { name: 'X', url: 'https://behance.net' },
-        { name: 'Instagram', url: 'https://instagram.com' },
+        { name: 'X', url: 'https://x.com/itzmichael_dev?s=11' },
+        { name: 'Instagram', url: 'https://www.instagram.com/michael_dev007?xtok=MW9mMTEwMW9pbWxncw%3D%3D&utm_source=qr' },
         { name: 'LinkedIn', url: 'https://www.linkedin.com/in/michael-onyekwere/' },
     ];
 
@@ -74,12 +74,12 @@ export default function Contact() {
                 <h1 className="headline font-serif-2">
                     <div style={{ overflow: 'hidden' }}>
                         <motion.div variants={maskedRise} custom={0} style={{ willChange: 'transform' }}>
-                            NEXT
+                            LET'S
                         </motion.div>
                     </div>
                     <div className="mt-1" style={{ overflow: 'hidden' }}>
                         <motion.div variants={maskedRise} custom={1} style={{ willChange: 'transform' }}>
-                            CHAPTER
+                            CONNECT
                         </motion.div>
                     </div>
                 </h1>
@@ -109,11 +109,17 @@ export default function Contact() {
                 <motion.div variants={fromBottom} custom={4} className="col text-[15px]! max-sm:text-[13px]!">
                     <div>CONTACT TO</div>
                     <div className="mutedd text-2xl! mt-2! text-white! max-sm:text-lg!">Onyekweremichael55@gmail.com</div>
+                    <a
+                        href="mailto:Onyekweremichael55@gmail.com?subject=Booking%20a%20Call"
+                        className="contact-call-btn rounded-md!  max-sm:mb-12!"
+                    >
+                        Book a Call
+                    </a>
                 </motion.div>
 
-                <motion.div variants={fromBottom} custom={4.6} className="scroll text-lg! max-sm:mb-12!">
+                {/* <motion.div variants={fromBottom} custom={4.6} className="scroll text-lg! max-sm:mb-12!">
                     LET'S CONNECT <span className="max-sm:hidden">THE DOTS...</span>
-                </motion.div>
+                </motion.div> */}
             </div>
         </motion.main>
     );

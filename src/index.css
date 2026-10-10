@@ -324,6 +324,76 @@ body {
   will-change: transform, opacity;
 }
 
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+  will-change: transform, opacity;
+}
+@media (max-width: 640px) {
+  .hero-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  background-color: #ece9e3;
+  color: #2e2b28;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid #ece9e3;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.22, 0.85, 0.32, 1);
+}
+.hero-btn:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #000;
+}
+
+.hero-btn--outline {
+  background-color: transparent;
+  color: #ece9e3;
+  border-color: rgba(236, 233, 227, 0.4);
+}
+.hero-btn--outline:hover {
+  background-color: #ece9e3;
+  color: #2e2b28;
+  border-color: #ece9e3;
+}
+
+.contact-call-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 12px 32px;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.contact-call-btn:hover {
+  background-color: #fff;
+  color: #181817;
+}
+
 .bottom {
   display: flex;
   justify-content: space-between;
@@ -568,12 +638,13 @@ body {
   margin-top: 60px;
   background: rgba(0, 0, 0, 0.04);
   border: 1px solid #d4cfc5;
+  padding: 20px;
 }
 
 .experience-logo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .experience-right {
@@ -4529,9 +4600,30 @@ body {
   background: #ece9e3;
 }
 .wm-media-scale { width: 100%; height: 100%; }
+
+/* Experience modal: logos sit centred with breathing room */
+.wm-media--exp {
+  background: #f4f2ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+.wm-media--exp .wm-media-scale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+  height: 75%;
+}
+.wm-media--exp .wm-img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
 .wm-img {
   display: block; width: 100%; height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   user-select: none;
   transition: transform 1s cubic-bezier(0.22, 0.85, 0.32, 1);
 }
