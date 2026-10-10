@@ -111,7 +111,7 @@ export default function Contact() {
                     <div className="mutedd text-2xl! mt-2! text-white! max-sm:text-lg!">Onyekweremichael55@gmail.com</div>
                     <a
                         href="mailto:Onyekweremichael55@gmail.com?subject=Booking%20a%20Call"
-                        className="contact-call-btn rounded-md!  max-sm:mb-12!"
+                        className="contact-call-btn rounded-md!  max-sm:mb-20!"
                     >
                         Book a Call
                     </a>
