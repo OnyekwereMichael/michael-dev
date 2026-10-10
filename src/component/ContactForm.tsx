@@ -8,6 +8,11 @@ interface FormData {
     message: string;
 }
 
+// EmailJS keys (set these in your .env file)
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
+
 export default function ContactForm({ onClose }: { onClose?: () => void }) {
     const [formData, setFormData] = useState<FormData>({
         email: '',
@@ -65,17 +70,27 @@ export default function ContactForm({ onClose }: { onClose?: () => void }) {
         setSubmitStatus('idle');
 
         try {
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            // Send the message to your inbox via EmailJS (no extra package needed)
+            const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    service_id: EMAILJS_SERVICE_ID,
+                    template_id: EMAILJS_TEMPLATE_ID,
+                    user_id: EMAILJS_PUBLIC_KEY,
+                    template_params: {
+                        from_name: formData.name.trim(),
+                        from_email: formData.email.trim(),
+                        reply_to: formData.email.trim(),
+                        message: formData.message.trim(),
+                    },
+                }),
+            });
 
-            // In production, you would send this to your backend:
-            // const response = await fetch('/api/contact', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(formData),
-            // });
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
 
-            console.log('Form submitted:', formData);
             setSubmitStatus('success');
             setFormData({ email: '', name: '', message: '' });
             setTouched({ email: false, name: false, message: false });
@@ -272,21 +287,7 @@ export default function ContactForm({ onClose }: { onClose?: () => void }) {
                         <AnimateStatusMessage status={submitStatus} />
                     </motion.form>
 
-                    <div className="contact-bottom mt-50! max-sm:flex hidden max-sm:mt-0! max-sm:mb-4!">
-                        <div className="contact-meta-item">
-                            <span className="contact-meta-label max-sm:text-sm!">Email</span>
-                            <span className="contact-meta-value">onyekweremichael55@gmail.com</span>
-                        </div>
-                        {/* <div className="contact-meta-item">
-                                <span className="contact-meta-label">Location</span>
-                                <span className="contact-meta-value">Lagos, Nigeria</span>
-                            </div> */}
-                        <div className="contact-meta-item">
-                            <span className="contact-meta-label max-sm:text-[12.5px]! max-sm:mb-0.5!">Status</span>
-                            <span className="contact-meta-value">Open for Collaborations</span>
-                        </div>
-                        {/* <p className="contact-tagline">LET'S BUILD SOMETHING GREAT</p> */}
-                    </div>
+                   
                 </motion.div>
 
                 {/* BOTTOM — metadata bar, same as Hero */}
