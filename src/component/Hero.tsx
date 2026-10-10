@@ -84,7 +84,7 @@ export default function Hero() {
 
       <div className="bottom">
         {/* 4. bottom columns rise up, one after the other */}
-        <motion.div className="col max-sm:mb-20!" {...reveal({ y: 60 }, 1.5, 1)}>
+        <motion.div className="col max-sm:mb-16!" {...reveal({ y: 60 }, 1.5, 1)}>
           <div>Lagos, Nigeria</div>
           <div className="muted">{localTime}</div>
         </motion.div>
