@@ -156,7 +156,7 @@ export default function Experience() {
                 {/* Last · CTA — from the bottom */}
                 <motion.div variants={fromBottom} custom={CTA_INDEX} className="work-detail-cta" style={{ marginTop: '50px' }}>
                     <motion.button
-                        className="work-detail-link max-sm:mb-7!"
+                        className="work-detail-link max-sm:mb-10!"
                         onClick={() => window.dispatchEvent(new CustomEvent('open-exp'))}
                         whileHover={{ x: 6 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
