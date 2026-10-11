@@ -61,7 +61,7 @@ export default function Home() {
     // ========== WHEEL EVENT (Desktop Mouse Scroll) ==========
     useEffect(() => {
         const handleWheel = (e: WheelEvent) => {
-            if (!showMain) return;
+            if (!showMain || isOverlayOpen()) return;
 
             e.preventDefault();
 
@@ -111,16 +111,21 @@ export default function Home() {
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [currentSlide, showMain, slides.length]);
 
-    // ========== TOUCH EVENTS (Mobile Swipe) - NEW! ==========
+    // ========== TOUCH EVENTS (Mobile Swipe) ==========
+    // Returns true when a full-screen overlay (project detail, modals, etc.) is mounted.
+    // In that case we must NOT intercept the swipe — the overlay handles its own scroll.
+    const isOverlayOpen = () =>
+        !!document.querySelector('.pd-container, .wm-screen, .contact-screen');
+
     useEffect(() => {
         const handleTouchStart = (e: TouchEvent) => {
-            if (!showMain) return;
+            if (!showMain || isOverlayOpen()) return;
             touchStartY.current = e.touches[0].clientY;
             touchStartX.current = e.touches[0].clientX;
         };
 
         const handleTouchEnd = (e: TouchEvent) => {
-            if (!showMain) return;
+            if (!showMain || isOverlayOpen()) return;
             if (isScrolling) return;
 
             const touchEndY = e.changedTouches[0].clientY;
@@ -131,13 +136,11 @@ export default function Home() {
 
             const swipeThreshold = 50;
 
-            // Check if it's a vertical swipe (not horizontal)
+            // Vertical swipe only
             if (Math.abs(deltaY) > Math.abs(deltaX)) {
                 if (deltaY > swipeThreshold) {
-                    // Swiped UP → Go to NEXT slide
                     goToNextSlide();
                 } else if (deltaY < -swipeThreshold) {
-                    // Swiped DOWN → Go to PREVIOUS slide
                     goToPreviousSlide();
                 }
             }

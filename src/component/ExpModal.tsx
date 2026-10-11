@@ -8,6 +8,7 @@ import devp from '../assets/logo-dark.webp';
 import glued from '../assets/Glued.png'
 import ProjectDetail, { type Project } from './ProjectDetail';
 import curi from '../assets/WhatsApp Image 2026-10-06 at 10.35.14.jpeg';
+import kaino from '../assets/kaino-removebg-preview.png';
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
 const TITLE = 'EXPERIENCE';
@@ -28,24 +29,30 @@ const projects: Project[] = [
     },
     {
         number: '03', category: 'FINTECH', year: '2026', title: 'Veriscore', image: veriscore,
-        overview: 'A financial scoring tool designed to give clear insights into credit and lending potentials.',
-        client: 'Mr. Segun Oyenuga', preview: 'https://veriscore.app/', scope: 'Frontend Developer', nextProject: 'DevPilot',
+        overview: 'Veriscore is a financial scoring tool designed to give clear insights into credit and lending potentials.',
+        client: 'Mr. Segun Oyenuga', preview: 'https://veriscore.app/', scope: 'Frontend Developer', nextProject: 'Glued',
     },
      {
         number: '04', category: 'Data-driven insights', year: '2026', title: 'Glued', image: glued,
-        overview: 'DevPilot is an AI-powered developer productivity tool that helps teams ship faster with intelligent code assistance and workflow automation.',
-        client: 'DevPilot Inc.', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'JDC',
+        overview: 'Glued Insights is a data-driven insights platform designed to provide clear insights into credit and lending potentials.',
+        client: 'Mr. Segun Oyenuga', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'Devpilot',
     },
     {
         number: '05', category: 'DEV TOOLS', year: '2026', title: 'DevPilot', image: devp,
-        overview: 'DevPilot is an AI-powered developer productivity tool that helps teams ship faster with intelligent code assistance and workflow automation.',
-        client: 'DevPilot Inc.', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'JDC',
+        overview: 'DevPilot is a platform that makes deployment of applications seamless and faster.',
+        client: 'DevPilot Inc.', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'Curi',
     },
-    {
+     {
         number: '06', category: 'E-LEARNING', year: '2026', title: 'Curi', image: curi,
         overview: 'Curi is a daily learning app that helps people grow their vocabulary and learn something new in just a few minutes a day.',
         client: 'Personal Project', preview: 'https://www.trycuri.app/', scope: 'Frontend Developer', nextProject: 'JDC',
     },
+    {
+        number: '07', category: 'CONSULTING', year: '2026', title: 'Kaino Tech', image: kaino,
+        overview: 'Kaino tech is a technology company that provides innovative solutions to businesses and clients.',
+        client: 'Kaino Tech', preview: '#', scope: 'Frontend Developer', nextProject: 'Curi',
+    },
+   
    
 ];
 

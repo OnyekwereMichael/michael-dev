@@ -170,33 +170,76 @@
     object-fit: cover;
 }
 
+/* ── Tablet / stacked layout (< 1024px) ── */
 @media (max-width: 1024px) {
     .pd-container {
         flex-direction: column;
+        /* The whole screen scrolls so the image below is reachable */
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        overscroll-behavior: contain;
     }
+
     .pd-left {
-        overflow-y: visible;
+        overflow-y: visible;   /* content flows naturally; the container scrolls */
         padding-right: 0;
-        flex: auto;
+        flex: none;            /* only take the height the content needs */
     }
+
     .pd-right {
-        flex: auto;
+        flex: none;
+        height: auto;          /* image panel grows to fit its content */
+        min-height: 280px;     /* always show at least a chunk of the image */
     }
+
     .pd-rail {
         display: none;
     }
+
     .pd-content {
         padding: 40px 20px;
     }
+
     .pd-section {
         grid-template-columns: 1fr;
         gap: 12px;
     }
+
     .pd-title {
         margin-bottom: 40px;
     }
+
     .pd-grid {
         gap: 40px;
+        /* Don't push to bottom on mobile; let it flow naturally */
+        margin-top: 0;
+    }
+}
+
+/* ── Phone (< 640px) ── */
+@media (max-width: 640px) {
+    .pd-content {
+        padding: 28px 20px 40px;
+    }
+
+    .pd-back {
+        margin-bottom: 32px;
+    }
+
+    .pd-title {
+        font-size: clamp(2.4rem, 12vw, 4rem);
+        margin-bottom: 32px;
+    }
+
+    .pd-right {
+        min-height: 60vw;      /* portrait-friendly aspect for the image */
+    }
+
+    .pd-image {
+        width: 100%;
+        height: 100%;
+        min-height: 60vw;
+        object-fit: cover;
     }
 }

@@ -66,11 +66,13 @@ export default function Hero() {
         {/* Action Buttons */}
         <motion.div className="hero-actions" {...reveal({ y: 20 }, 1.3, 1)}>
           <a
-            href="mailto:Onyekweremichael55@gmail.com?subject=Booking%20a%20Call"
-            className="hero-btn"
-          >
-            Book a Call
-          </a>
+  href="https://cal.com/michael-u7gds1/book-a-call"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="hero-btn"
+>
+  Book a Call
+</a>
           <a
             href={resume}
             download="Michael_Onyekwere_Resume.pdf"
@@ -84,7 +86,7 @@ export default function Hero() {
 
       <div className="bottom">
         {/* 4. bottom columns rise up, one after the other */}
-        <motion.div className="col max-sm:mb-16!" {...reveal({ y: 60 }, 1.5, 1)}>
+        <motion.div className="col max-sm:mb-18!" {...reveal({ y: 60 }, 1.5, 1)}>
           <div>Lagos, Nigeria</div>
           <div className="muted">{localTime}</div>
         </motion.div>

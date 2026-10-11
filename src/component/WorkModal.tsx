@@ -17,7 +17,7 @@ const projects: Project[] = [
     {
         number: '01', category: 'E-LEARNING', year: '2026', title: 'Curi', image: curi,
         overview: 'Curi is a daily learning app that helps people grow their vocabulary and learn something new in just a few minutes a day. Built for everyone, from students to professionals.',
-        client: 'Personal Project', preview: 'https://www.trycuri.app/', scope: 'Frontend Developer', nextProject: 'Vendors app',
+        client: 'Personal Project', preview: 'https://www.trycuri.app/', scope: 'Fullstack Developer', nextProject: 'Vendors app',
     },
     {
         number: '02', category: 'E-COMMERCE', year: '2026', title: 'Vendors app', image: vendorsapp,
@@ -33,7 +33,7 @@ const projects: Project[] = [
         number: '04', category: 'REAL ESTATE', year: '2026', title: 'Whitelist',
         image: whitelist,
         overview: "Whether you're searching for your dream home or looking to rent out a property, Whitelist makes the process seamless and efficient",
-        client: 'Mr Ebuka & Manuel', preview: '#', scope: 'Web Developer', nextProject: 'Evo Money',
+        client: 'Mr Ebuka & Manuel', preview: 'https://www.whitelistproperties.com/', scope: 'Frontend Developer', nextProject: 'Curi',
     },
 ];
 
