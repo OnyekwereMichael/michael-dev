@@ -133,7 +133,7 @@ export default function WorkDetail() {
                                         <motion.span
                                             className="work-detail-project-arrow"
                                             animate={{
-                                                opacity: isActive ? 1 : 0.2,
+                                                opacity: isActive ? 1 : 0,
                                                 x: isActive ? 4 : 0
                                             }}
                                             transition={{ duration: 0.3 }}
