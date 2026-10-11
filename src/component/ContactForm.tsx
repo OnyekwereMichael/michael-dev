@@ -261,6 +261,9 @@ export default function ContactForm({ onClose }: { onClose?: () => void }) {
                             )}
                         </div>
 
+                        <AnimateStatusMessage status={submitStatus} />
+
+
                         {/* Actions + status */}
                         <div className="form-actions mb-6!">
                             <motion.button
@@ -284,7 +287,6 @@ export default function ContactForm({ onClose }: { onClose?: () => void }) {
                             </motion.button>
                         </div>
 
-                        <AnimateStatusMessage status={submitStatus} />
                     </motion.form>
 
                    

@@ -354,6 +354,18 @@ body {
   border-radius: 2px;
   transition: all 0.3s cubic-bezier(0.22, 0.85, 0.32, 1);
 }
+
+@media (max-width: 640px) {
+  .hero-btn{
+    padding: 12px 28px;
+    font-size: 12.5px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
 .hero-btn:hover {
   background-color: #fff;
   border-color: #fff;
@@ -911,7 +923,7 @@ body {
   .intro {
     max-width: 100%;
     padding-top: 0;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.7;
   }
   .bottom {

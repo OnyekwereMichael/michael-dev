@@ -163,19 +163,19 @@ export default function Experience() {
                     >
                         See All Experience 
                         <motion.span
-                            className="work-detail-arrow max-sm:hidden!"
+                            className="work-detail-arrow "
                             whileHover={{ x: 3 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                         >
                             →
                         </motion.span>
-                        <motion.span
+                        {/* <motion.span
                             className="work-detail-arrow hidden! max-sm:block!"
                             whileHover={{ x: 3 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                         >
                             ↗
-                        </motion.span>
+                        </motion.span> */}
                     </motion.button>
                 </motion.div>
             </div>
