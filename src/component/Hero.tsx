@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import resume from '../assets/Michael.pdf';
+import resume from '../assets/Michael_FE (1).pdf';
 
 function useLagosTime() {
   const [time, setTime] = useState('');
