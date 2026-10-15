@@ -111,7 +111,7 @@ export default function CareerJourney() {
                                 className="career-entry"
                             >
                                 <div className="career-period">{item.period}</div>
-                                <div className="career-title">{item.title}</div>
+                                <div className="career-title max-sm:mt-3!">{item.title}</div>
                                 <div className="career-company">{item.company}</div>
                                 {idx < careerData.length - 1 && (
                                     <motion.div

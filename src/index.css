@@ -486,7 +486,7 @@ body {
 
 .bottom .col {
   line-height: 1.6;
-  font-family: var(--font-serif-2);
+  font-family: var(--font-sans);
   font-size: 15.5px;
   font-weight: 400;
   will-change: transform, opacity;
@@ -503,7 +503,7 @@ body {
 
 .bottom .col .mutedd {
   color: var(--ink-dim);
-  font-family: var(--font-serif-2);
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 400;
   margin-top: 2px;
@@ -923,15 +923,19 @@ body {
 
   .experience-logo-section,
   .experience-right {
-    padding: 20px 20px;
+    padding: 20px 20px; 
   }
 
   .experience-logo-container {
-    width: 100%;
+    width: 70%;
     height: 100%;
     margin-bottom: 0px;
     margin-top: 0;
+  padding: 0px;
+  border: 0px solid #d4cfc5;
   }
+
+  
 
   .experience-chapter {
     font-size: clamp(1.3rem, 2vw, 1.8rem);
@@ -958,7 +962,6 @@ body {
   }
 
   .whatido-section-label {
-
     margin: 0 0 0px 0;
   }
 }
@@ -972,7 +975,7 @@ body {
 
   .bottom .col {
     line-height: 1.6;
-    font-family: var(--font-serif-2);
+    font-family: var(--font-sans);
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 30px;
@@ -1523,7 +1526,7 @@ body {
   width: 100%;
 }
 
-/* ========== SUBTEXT SPACING FIX ========== */
+
 .counter-subtext {
   font-size: clamp(0.95rem, 2.5vw, 1.2rem);
   color: var(--ink);
@@ -1608,7 +1611,7 @@ body {
 .counter-char {
   transform: translateZ(0);
   backface-visibility: hidden;
-  font-family: var(--font-serif-2);
+  font-family: var(--font-sans);
 }
 
 /* ========== SMOOTH ANIMATION SUPPORT ========== */
@@ -1750,7 +1753,6 @@ body {
 
   border-radius: 4px;
   overflow: hidden;
-  /* background: #e8e8e8; */
 }
 
 .about-portrait-section {
@@ -2608,111 +2610,118 @@ body {
   }
 }
 
-/* Responsive - Mobile */
+/* ---------- Career Journey: refined mobile layout ---------- */
 @media (max-width: 768px) {
   .career-journey-main {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    grid-template-columns: minmax(0, 1fr);
     height: auto;
     min-height: 100%;
-    overflow: visible;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: linear-gradient(180deg, #262220 0%, #1f1d1b 100%);
   }
 
   .career-journey-left {
     border-right: none;
-    border-bottom: 1px solid rgba(243, 238, 232, 0.12);
-    height: auto;
+    border-bottom: none;
+    background: none;
   }
 
-  /* Compact centered header band on mobile */
   .career-journey-left-content {
-    padding: 80px 24px 36px;
-    gap: 12px;
+    align-items: flex-start;
+    text-align: left;
+    padding: 84px 24px 36px;
+    gap: 14px;
     height: auto;
-    align-items: center;
-    text-align: center;
-  }
-
-  .career-journey-right {
-    padding: 36px 24px 48px;
-    height: auto;
-    gap: 0;
-    overflow: visible;
   }
 
   .career-journey-title {
-    font-size: clamp(2.4rem, 8vw, 3.2rem);
-    text-align: center;
+    font-size: clamp(2.2rem, 10vw, 3rem);
+    line-height: 1.12;
+    letter-spacing: 0.06em;
+    text-align: left;
   }
 
   .career-journey-subtitle {
-    display: block;
-    font-size: clamp(0.75rem, 3vw, 0.9rem);
-    margin-top: 4px;
-    letter-spacing: 0.2em;
+    margin-top: 6px;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: rgba(243, 238, 232, 0.5);
   }
 
-  .career-journey-description {
-    font-size: clamp(0.9rem, 3.5vw, 1rem);
-    line-height: 1.65;
-    max-width: 100%;
-    margin-bottom: 8px;
+  .career-journey-right {
+    padding: 28px 24px 130px;
+    gap: 0;
+    overflow-x: hidden;
+    overflow-y: visible;
+    background: none;
+  }
+
+  .career-journey-right::before {
+    display: none;
+  }
+
+  .career-timeline {
+    gap: 0;
+    border-top: 1px solid rgba(243, 238, 232, 0.14);
   }
 
   .career-entry {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 6px;
+    width: 100%;
     padding: 22px 0;
+    border-bottom: 1px solid rgba(243, 238, 232, 0.12);
+  }
+
+  .career-entry:last-child {
+    border-bottom: none;
+  }
+
+  .career-period {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #d4a574;
+    white-space: nowrap;
+  }
+
+  .career-title {
+    font-family: var(--font-serif-2);
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    color: #f3eee8;
   }
 
   .career-company {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(243, 238, 232, 0.55);
     text-align: left;
   }
 }
 
 @media (max-width: 480px) {
   .career-journey-left-content {
-    padding: 62px 18px 28px;
-    gap: 10px;
+    padding: 76px 20px 28px;
   }
 
   .career-journey-right {
-    padding: 28px 18px 44px;
-  }
-
-  .career-journey-title {
-    font-size: clamp(1rem, 9vw, 1.7rem);
-  }
-
-  .career-journey-subtitle {
-    font-size: clamp(0.7rem, 2.8vw, 0.85rem);
-    margin-top: 2px;
-    margin-bottom: 14px
-  }
-
-  .career-journey-accent {
-    font-size: 18px;
-  }
-
-  .career-journey-description {
-    font-size: clamp(0.9rem, 3.8vw, 1rem);
-    line-height: 1.65;
-  }
-
-  .career-period {
-    font-size: clamp(1rem, 4vw, 1.15rem);
-    color: #d4a574;
+    padding: 24px 20px 130px;
   }
 
   .career-title {
-    font-size: clamp(0.95rem, 3.8vw, 1.05rem);
-  }
-
-  .career-company {
-    font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+    font-size: 1.1rem;
   }
 }
-
 /* Hide scrollbar */
 .career-journey-right::-webkit-scrollbar {
   display: none;
@@ -3037,6 +3046,7 @@ body {
   .about-portrait {
     max-width: 100%;
     background: none;
+    height: 230px;
   }
 
 

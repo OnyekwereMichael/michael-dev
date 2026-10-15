@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const START_YEAR = 2023;
-const STEP_MS = 1000;
+const STEP_MS = 1000;            // one year every 1 second
+const ROLL_S = 0.6;              // each roll finishes well before the next tick
+const EASE = [0.33, 1, 0.68, 1] as const;
+
 export default function Counter({ onComplete }: { onComplete: () => void }) {
     const [displayNumber, setDisplayNumber] = useState(String(START_YEAR));
     const [showSubtext, setShowSubtext] = useState(false);
@@ -14,54 +17,30 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
 
     const targetYear = new Date().getFullYear();
     const steps = Math.max(targetYear - START_YEAR, 0);
+    const totalMs = steps * STEP_MS;           // the whole counting run
     const subtext = 'A journey through years of building';
 
+    // One schedule: every year is a fixed offset from the same start time
     useEffect(() => {
-        let year = START_YEAR;
         const timers: ReturnType<typeof setTimeout>[] = [];
 
-        const interval = setInterval(() => {
-            year += 1;
-            setDisplayNumber(String(year));
+        for (let i = 1; i <= steps; i++) {
+            timers.push(
+                setTimeout(() => setDisplayNumber(String(START_YEAR + i)), i * STEP_MS)
+            );
+        }
 
-            if (year >= targetYear) {
-                clearInterval(interval);
-                timers.push(setTimeout(() => setShowSubtext(true), 200));
-                timers.push(setTimeout(() => onCompleteRef.current(), 3200));
-            }
-        }, STEP_MS);
+        // Subtext and exit are placed on the same timeline, after the last year
+        timers.push(setTimeout(() => setShowSubtext(true), totalMs + 400));
+        timers.push(setTimeout(() => onCompleteRef.current(), totalMs + 2400));
 
-        return () => {
-            clearInterval(interval);
-            timers.forEach(clearTimeout);
-        };
-    }, [targetYear]);
+        return () => timers.forEach(clearTimeout);
+    }, [steps, totalMs]);
 
-    // ========== TEXT ANIMATION VARIANTS ==========
-    const charVariants: Variants = {
-        hidden: { opacity: 0, y: 15 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.35, ease: [0.22, 0.85, 0.32, 1] },
-        },
-    };
-
-    const containerVariants: Variants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.06, delayChildren: 0.15 },
-        },
-    };
-
-    // ========== ROLLING DIGIT ANIMATION (same timing for every year) ==========
-    const rollTransition = { duration: 0.4, ease: [0.22, 0.85, 0.32, 1] as const };
-
-    const rollingDigitVariants: Variants = {
-        enter: { y: 80, opacity: 0 },
-        center: { y: 0, opacity: 1, transition: rollTransition },
-        exit: { y: -80, opacity: 0, transition: rollTransition },
+    const rollVariants = {
+        enter: { y: '100%' },
+        center: { y: '0%', transition: { duration: ROLL_S, ease: EASE } },
+        exit: { y: '-100%', transition: { duration: ROLL_S, ease: EASE } },
     };
 
     return (
@@ -69,63 +48,61 @@ export default function Counter({ onComplete }: { onComplete: () => void }) {
             className="counter-screen"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{
-                opacity: 0,
-                transition: { duration: 0.8, ease: [0.22, 0.85, 0.32, 1] },
-            }}
+            exit={{ opacity: 0, transition: { duration: 1, ease: EASE } }}
         >
             <div className="counter-main">
                 <motion.div
                     className="counter-content"
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 0.85, 0.32, 1] }}
-                    exit={{
-                        opacity: 0,
-                        y: -80,
-                        transition: { duration: 0.8, ease: [0.22, 0.85, 0.32, 1] },
-                    }}
+                    transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
+                    exit={{ opacity: 0, y: -24, transition: { duration: 1, ease: EASE } }}
                 >
                     <div className="counter-number font-serif-2">
-                        <div className="rolling-container">
-                            <AnimatePresence>
+                        <div
+                            className="rolling-container"
+                            style={{ position: 'relative', overflow: 'hidden' }}
+                        >
+                            <AnimatePresence initial={false}>
                                 <motion.div
                                     key={displayNumber}
                                     className="rolling-number"
                                     initial="enter"
                                     animate="center"
                                     exit="exit"
-                                    variants={rollingDigitVariants}
+                                    variants={rollVariants}
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        willChange: 'transform',
+                                    }}
                                 >
                                     <span className="number-text">{displayNumber}</span>
                                 </motion.div>
                             </AnimatePresence>
+                            <span className="number-text" style={{ visibility: 'hidden' }}>
+                                {displayNumber}
+                            </span>
                         </div>
                     </div>
 
-                    <motion.div
+                    <motion.p
                         className="counter-subtext max-sm:text-sm!"
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate={showSubtext ? 'visible' : 'hidden'}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={showSubtext ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                        transition={{ duration: 1, ease: EASE }}
+                        style={{ willChange: 'transform, opacity' }}
                     >
-                        {subtext.split('').map((char, index) => (
-                            <motion.span
-                                key={index}
-                                variants={charVariants}
-                                className="counter-char"
-                            >
-                                {char}
-                            </motion.span>
-                        ))}
-                    </motion.div>
+                        {subtext}
+                    </motion.p>
                 </motion.div>
 
+                {/* Progress bar runs for exactly the same length as the year count */}
                 <motion.div
                     className="counter-progress"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{ duration: (steps * STEP_MS) / 1000, ease: 'linear' }}
+                    transition={{ duration: totalMs / 1000, ease: 'linear' }}
                 >
                     <div className="counter-progress-bar"></div>
                 </motion.div>

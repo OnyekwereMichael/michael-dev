@@ -2,48 +2,31 @@
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
-const STEP = 0.2;    // gap between sequence steps (seconds)
-const START = 0.25;  // delay before the first element
-const SIDE = 60;     // slide distance in px
+const RISE = 40;       // how far each element travels up from below (px)
+const DURATION = 0.9;  // length of each rise (seconds)
 
 export default function WhatIDo() {
     const reduce = useReducedMotion();
-    const delayFor = (i: number) => START + i * STEP;
 
-    // Parent only flips hidden → visible; each child owns its direction and timing via `custom`
+    // Parent only flips hidden → visible; each child sets its own delay via `custom`
     const containerVariants: Variants = { hidden: {}, visible: {} };
 
-    // CHAPTER III rises out of an invisible mask
+    // Every element rises from below: opacity + translate only, no scale, no spring
+    const riseUp: Variants = {
+        hidden: { opacity: 0, y: reduce ? 0 : RISE },
+        visible: (delay: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: { duration: reduce ? 0.3 : DURATION, delay, ease: EASE },
+        }),
+    };
+
+    // Chapter heading rises out of a mask, same smooth motion
     const maskedRise: Variants = {
         hidden: { y: reduce ? 0 : '110%' },
-        visible: (i: number) => ({
-            y: 0,
-            transition: { duration: 1.1, delay: delayFor(i), ease: EASE },
-        }),
-    };
-
-    const fromLeft: Variants = {
-        hidden: { opacity: 0, x: reduce ? 0 : -SIDE },
-        visible: (i: number) => ({
-            opacity: 1, x: 0,
-            transition: { duration: 0.9, delay: delayFor(i), ease: EASE },
-        }),
-    };
-
-    const fromRight: Variants = {
-        hidden: { opacity: 0, x: reduce ? 0 : SIDE },
-        visible: (i: number) => ({
-            opacity: 1, x: 0,
-            transition: { duration: 0.9, delay: delayFor(i), ease: EASE },
-        }),
-    };
-
-    // Skill tags pop in one by one after their category lands. `custom` here is an absolute delay in seconds.
-    const tagVariants: Variants = {
-        hidden: { opacity: 0, y: reduce ? 0 : 14, scale: reduce ? 1 : 0.92 },
         visible: (delay: number) => ({
-            opacity: 1, y: 0, scale: 1,
-            transition: { duration: 0.6, delay, ease: EASE },
+            y: 0,
+            transition: { duration: 1, delay, ease: EASE },
         }),
     };
 
@@ -61,10 +44,19 @@ export default function WhatIDo() {
     ];
 
     /*
-     * Sequence (left and right columns alternate, so the page builds in a zig-zag):
-     *  0 chapter (rises) · 1 "How I work" (left) · 1.5 "Skills" (right)
-     *  2–5 process steps (left, one by one) · 2.5 / 3.5 / 4.5 skill categories (right) → their tags pop in
+     * Timeline (seconds). Everything rises from below, one step after another:
+     *  0.25  CHAPTER III
+     *  0.50  HOW I WORK  ·  0.50 SKILLS & TECH
+     *  0.70 / 0.90 / 1.10 / 1.30  process steps 1–4 (left, one by one)
+     *  0.70 / 1.00 / 1.30         skill categories (right, one by one)
+     *  each category's tags rise one by one just after their category
      */
+    const STEP = 0.2;
+    const CHAPTER_AT = 0.25;
+    const LABEL_AT = 0.5;
+    const STEPS_AT = 0.7;
+    const CATEGORY_AT = 0.7;
+
     return (
         <motion.main
             className="whatido-main"
@@ -79,7 +71,7 @@ export default function WhatIDo() {
                     <motion.h2
                         className="whatido-chapter max-sm:py-0!"
                         variants={maskedRise}
-                        custom={0}
+                        custom={CHAPTER_AT}
                         style={{ willChange: 'transform' }}
                     >
                         CHAPTER III
@@ -87,16 +79,23 @@ export default function WhatIDo() {
                 </div>
 
                 <div className="whatido-process max-sm:hidden!">
-                    <motion.p variants={fromLeft} custom={1} className="whatido-section-label">
+                    <motion.p
+                        variants={riseUp}
+                        custom={LABEL_AT}
+                        className="whatido-section-label"
+                        style={{ willChange: 'transform, opacity' }}
+                    >
                         HOW I WORK
                     </motion.p>
+
                     <div className="process-steps">
                         {processSteps.map((step, i) => (
                             <motion.div
                                 key={step.id}
-                                variants={fromLeft}
-                                custom={2 + i}
+                                variants={riseUp}
+                                custom={STEPS_AT + i * STEP}
                                 className="process-step"
+                                style={{ willChange: 'transform, opacity' }}
                             >
                                 <div className="process-step-number">{step.id}</div>
                                 <div className="process-step-content">
@@ -112,27 +111,35 @@ export default function WhatIDo() {
             {/* Right Section - Skills */}
             <div className="whatido-right">
                 <div className="whatido-skills">
-                    <motion.p variants={fromRight} custom={1.5} className="whatido-section-label">
+                    <motion.p
+                        variants={riseUp}
+                        custom={LABEL_AT}
+                        className="whatido-section-label"
+                        style={{ willChange: 'transform, opacity' }}
+                    >
                         SKILLS & TECH
                     </motion.p>
+
                     <div className="skills-categories">
                         {skillsCategories.map((category, c) => {
-                            const slot = 2.5 + c;
+                            const categoryAt = CATEGORY_AT + c * 0.3;
                             return (
                                 <motion.div
                                     key={category.label}
-                                    variants={fromRight}
-                                    custom={slot}
+                                    variants={riseUp}
+                                    custom={categoryAt}
                                     className="skill-category"
+                                    style={{ willChange: 'transform, opacity' }}
                                 >
                                     <h4 className="skill-category-title">{category.label}</h4>
                                     <div className="skill-tags">
                                         {category.items.map((item, idx) => (
                                             <motion.span
-                                                key={idx}
+                                                key={item}
                                                 className="skill-tag"
-                                                variants={tagVariants}
-                                                custom={delayFor(slot) + 0.35 + idx * 0.07}
+                                                variants={riseUp}
+                                                custom={categoryAt + 0.2 + idx * 0.08}
+                                                style={{ willChange: 'transform, opacity' }}
                                             >
                                                 {item}
                                             </motion.span>

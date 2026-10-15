@@ -17,7 +17,6 @@ export default function Experience() {
 
     const containerVariants: Variants = { hidden: {}, visible: {} };
 
-    // "CHAPTER IV" rises out of an invisible mask
     const maskedRise: Variants = {
         hidden: { y: reduce ? 0 : '110%' },
         visible: (i: number) => ({
@@ -43,11 +42,9 @@ export default function Experience() {
     };
 
     const experiences = [
-        { name: 'JDC', logo: jdc, url: 'http://consulting.josonseth.com/' },
         { name: 'James Chase', logo: jc, url: 'https://james-chase.com/' },
+        { name: 'JDC', logo: jdc, url: 'http://consulting.josonseth.com/' },
         { name: 'Veriscore', logo: veriscore, url: 'https://veriscore.app/' },
-        // { name: 'DevPilot', logo: devp, url: 'https://devpilot.io/' },
-        // { name: 'Vendors App', logo: vendors, url: '#' },
     ];
 
     const imageVariants: Variants = {
@@ -73,7 +70,6 @@ export default function Experience() {
             variants={containerVariants}
         >
             <div className="experience-logo-section">
-                {/* 1 · Chapter IV — rises from the bottom */}
                 <div style={{ overflow: 'hidden' }}>
                     <motion.h2
                         className="experience-chapter max-sm:pt-2!"
@@ -85,8 +81,6 @@ export default function Experience() {
                     </motion.h2>
                 </div>
 
-                {/* 2 · Logo — rises from the bottom.
-                    Outer element = entrance. Inner keyed element = the hover swap, so the two never fight. */}
                 <motion.div 
                     variants={fromBottom} 
                     custom={1} 
@@ -156,7 +150,7 @@ export default function Experience() {
                 {/* Last · CTA — from the bottom */}
                 <motion.div variants={fromBottom} custom={CTA_INDEX} className="work-detail-cta" style={{ marginTop: '50px' }}>
                     <motion.button
-                        className="work-detail-link max-sm:mb-10!"
+                        className="work-detail-link max-sm:mb-5!"
                         onClick={() => window.dispatchEvent(new CustomEvent('open-exp'))}
                         whileHover={{ x: 6 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 20 }}

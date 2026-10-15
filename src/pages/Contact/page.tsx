@@ -108,7 +108,7 @@ export default function Contact() {
             <div className="bottom">
                 <motion.div variants={fromBottom} custom={4} className="col text-[15px]! max-sm:text-[13px]!">
                     <div>CONTACT TO</div>
-                    <div className="mutedd text-2xl! mt-2! text-white! max-sm:text-lg!">Onyekweremichael55@gmail.com</div>
+                    <div className="mutedd text-xl! mt-2! text-white! max-sm:text-lg!">Onyekweremichael55@gmail.com</div>
                     <a
                          href="https://cal.com/michael-u7gds1/book-a-call"
                         className="contact-call-btn rounded-md!  max-sm:mb-20!"
