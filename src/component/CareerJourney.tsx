@@ -11,7 +11,9 @@ export default function CareerJourney() {
 
     const careerData = [
         { period: '2026 — NOW', title: 'Frontend Engineer', company: 'Veriscore' },
+        { period: '2026 — NOW', title: 'Frontend Engineer', company: 'Glued Insights' },
         { period: '2026', title: 'Frontend Engineer', company: 'James Chase' },
+        { period: '2026', title: 'Frontend Engineer', company: 'Josonseth Digital Consulting (JDC)' },
         { period: '2025 — 2026', title: 'Mobile Developer', company: 'MCP' },
         { period: '2024 — 2025', title: 'Frontend Engineer', company: 'Kaino Tech' },
     ];
@@ -55,11 +57,7 @@ export default function CareerJourney() {
         marginBottom: '-0.12em',
     };
 
-    /*
-     * Sequence (left and right alternate, so the page builds in a zig-zag):
-     *  Left : 0 accent · 1 CAREER · 2 JOURNEY · 3 subtitle
-     *  Right: 1.5 · 2.5 · 3.5 · 4.5  → each timeline entry rises in, then its divider draws
-     */
+
     return (
         <motion.div
             className="career-journey-main"
@@ -75,12 +73,13 @@ export default function CareerJourney() {
 
                     </motion.div>
 
+
                     <h1 className="career-journey-title" aria-label="Career Journey">
                         <span style={mask} aria-hidden="true">
                             <motion.span variants={maskedRise} custom={1} style={{ display: 'inline-block', willChange: 'transform' }}>
                                 CAREER
                             </motion.span>
-                        </span>{' '}
+                        </span>
                         <br className="max-sm:hidden!" />
                         <span style={mask} aria-hidden="true">
                             <motion.span variants={maskedRise} custom={2} style={{ display: 'inline-block', willChange: 'transform' }}>

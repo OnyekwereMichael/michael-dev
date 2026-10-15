@@ -91,7 +91,7 @@ export default function About() {
                     {/* 4 · More about me & Resume — from the bottom */}
                     <motion.div variants={fromBottom} custom={3} className="about-cta flex gap-4 max-sm:flex-col items-start">
                         <button
-                            className="more-link text-[#2e2b28]!"
+                            className="more-link text-[#2e2b28]! max-sm:text-[22px]!"
                             onClick={() => window.dispatchEvent(new CustomEvent('open-about'))}
                         >
                             More about me <span className="arrow text-[#2e2b28]!">→</span>

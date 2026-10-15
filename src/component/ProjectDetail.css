@@ -170,6 +170,72 @@
     object-fit: cover;
 }
 
+/* ── Logo-showcase mode (Glued Insights · Veriscore · DevPilot) ── */
+.pd-right--logo-stage {
+    /* background is set via inline style from JS */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    padding: 40px;
+}
+
+.pd-logo-stage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.pd-logo-glow {
+    position: absolute;
+    width: min(520px, 90%);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    /* background set via inline style from JS */
+    pointer-events: none;
+    filter: blur(56px);
+}
+
+.pd-logo-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 16 / 10;
+    /* background set via inline style from JS */
+    border: 1px solid rgba(128, 128, 128, 0.12);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 48px;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.06),
+        0 20px 40px -15px rgba(0, 0, 0, 0.10);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+}
+
+.pd-logo-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.08),
+        0 32px 64px -20px rgba(0, 0, 0, 0.18);
+}
+
+.pd-logo-img {
+    /* maxWidth set via inline style from JS */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
 /* ── Tablet / stacked layout (< 1024px) ── */
 @media (max-width: 1024px) {
     .pd-container {
@@ -191,6 +257,18 @@
         flex: none;
         height: auto;          /* image panel grows to fit its content */
         min-height: 280px;     /* always show at least a chunk of the image */
+    }
+
+    .pd-right--logo-stage {
+        height: auto;
+        min-height: 380px;
+        padding: 50px 20px 70px;
+    }
+
+    .pd-logo-card {
+        max-width: 400px;
+        aspect-ratio: 16 / 9;
+        padding: 36px 32px;
     }
 
     .pd-rail {
@@ -234,6 +312,22 @@
 
     .pd-right {
         min-height: 60vw;      /* portrait-friendly aspect for the image */
+    }
+
+    .pd-right--logo-stage {
+        min-height: 280px;
+        padding: 36px 16px 48px;
+    }
+
+    .pd-logo-card {
+        max-width: 320px;
+        aspect-ratio: auto;
+        padding: 32px 24px;
+        border-radius: 12px;
+    }
+
+    .pd-logo-img {
+        max-width: 190px;
     }
 
     .pd-image {

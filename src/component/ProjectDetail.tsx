@@ -19,7 +19,45 @@ interface ProjectDetailProps {
     onBack: () => void;
 }
 
+type LogoShowcase = {
+    cardBg: string;
+    glowColor: string;
+    stageBg: string;
+    maxLogoWidth: string;
+};
+
+function getLogoShowcase(title: string): LogoShowcase | null {
+    const t = title.toLowerCase();
+    if (t.includes('glued')) {
+        return {
+            cardBg: '#ffffff',
+            glowColor: 'rgba(106, 13, 173, 0.10)',
+            stageBg: '#faf8f5',
+            maxLogoWidth: '270px',
+        };
+    }
+    if (t.includes('veriscore')) {
+        return {
+            cardBg: '#ffffff',
+            glowColor: 'rgba(7, 102, 173, 0.10)',
+            stageBg: '#f4f8fc',
+            maxLogoWidth: '220px',
+        };
+    }
+    if (t.includes('devpilot')) {
+        return {
+            cardBg: '#0a0a0a',
+            glowColor: 'rgba(37, 99, 235, 0.18)',
+            stageBg: '#0f0f0f',
+            maxLogoWidth: '220px',
+        };
+    }
+    return null;
+}
+
 export default function ProjectDetail({ project, onBack }: ProjectDetailProps) {
+    const showcase = getLogoShowcase(project.title);
+
     return (
         <motion.div
             className="pd-container"
@@ -87,8 +125,36 @@ export default function ProjectDetail({ project, onBack }: ProjectDetailProps) {
                 </div>
             </div>
 
-            <div className="pd-right">
-                <img src={project.image as string} alt={project.title} className="pd-image" />
+            <div
+                className={`pd-right ${showcase ? 'pd-right--logo-stage' : ''}`}
+                style={showcase ? { background: showcase.stageBg } : undefined}
+            >
+                {showcase ? (
+                    <div className="pd-logo-stage">
+                        <div
+                            className="pd-logo-glow"
+                            style={{
+                                background: `radial-gradient(circle, ${showcase.glowColor} 0%, transparent 70%)`,
+                            }}
+                        />
+                        <motion.div
+                            className="pd-logo-card"
+                            style={{ background: showcase.cardBg }}
+                            initial={{ opacity: 0, scale: 0.94, y: 15 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                            <img
+                                src={project.image as string}
+                                alt={project.title}
+                                className="pd-logo-img"
+                                style={{ maxWidth: showcase.maxLogoWidth }}
+                            />
+                        </motion.div>
+                    </div>
+                ) : (
+                    <img src={project.image as string} alt={project.title} className="pd-image" />
+                )}
             </div>
         </motion.div>
     );

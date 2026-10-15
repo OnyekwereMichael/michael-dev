@@ -20,37 +20,37 @@ const projects: Project[] = [
     {
         number: '01', category: 'CONSULTING', year: '2026', title: 'JDC', image: jdc,
         overview: 'JosonSeth Digital Consulting (JDC) is a digital transformation firm helping businesses scale through strategy, design, and technology.',
-        client: 'JosonSeth', preview: 'http://consulting.josonseth.com/', scope: 'Frontend Developer', nextProject: 'James Chase',
+        client: 'Mr Joseph', preview: 'http://consulting.josonseth.com/', scope: 'Frontend Engineer', nextProject: 'James Chase',
     },
     {
         number: '02', category: 'CREATIVE AGENCY', year: '2026', title: 'James Chase', image: jc,
         overview: 'James Chase is a creative branding and design agency delivering premium visual identities and digital experiences.',
-        client: 'James Chase Ltd', preview: 'https://james-chase.com/', scope: 'Frontend Developer', nextProject: 'Veriscore',
+        client: 'Mr. James Leigh', preview: 'https://james-chase.com/', scope: 'Frontend Developer', nextProject: 'Veriscore',
     },
     {
         number: '03', category: 'FINTECH', year: '2026', title: 'Veriscore', image: veriscore,
         overview: 'Veriscore is a financial scoring tool designed to give clear insights into credit and lending potentials.',
-        client: 'Mr. Segun Oyenuga', preview: 'https://veriscore.app/', scope: 'Frontend Developer', nextProject: 'Glued',
+        client: 'Mr. Segun Oyenuga', preview: 'https://veriscore.app/', scope: 'Frontend Engineer', nextProject: 'Glued Insights',
     },
      {
-        number: '04', category: 'Data-driven insights', year: '2026', title: 'Glued', image: glued,
+        number: '04', category: 'Data-driven insights', year: '2026', title: 'Glued Insights', image: glued,
         overview: 'Glued Insights is a data-driven insights platform designed to provide clear insights into credit and lending potentials.',
-        client: 'Mr. Segun Oyenuga', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'Devpilot',
+        client: 'Mr. Segun Oyenuga', preview: 'https://gluedinsights.com/', scope: 'Frontend Developer', nextProject: 'Devpilot',
     },
     {
         number: '05', category: 'DEV TOOLS', year: '2026', title: 'DevPilot', image: devp,
         overview: 'DevPilot is a platform that makes deployment of applications seamless and faster.',
-        client: 'DevPilot Inc.', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'Curi',
+        client: 'Mr Joel', preview: 'https://devpilot.io/', scope: 'Frontend Developer', nextProject: 'Curi',
     },
      {
         number: '06', category: 'E-LEARNING', year: '2026', title: 'Curi', image: curi,
         overview: 'Curi is a daily learning app that helps people grow their vocabulary and learn something new in just a few minutes a day.',
-        client: 'Personal Project', preview: 'https://www.trycuri.app/', scope: 'Frontend Developer', nextProject: 'JDC',
+        client: 'Personal Project', preview: 'https://www.trycuri.app/', scope: 'Frontend Engineer', nextProject: 'JDC',
     },
     {
-        number: '07', category: 'CONSULTING', year: '2026', title: 'Kaino Tech', image: kaino,
+        number: '07', category: 'Software Agency', year: '2024', title: 'Kaino Tech', image: kaino,
         overview: 'Kaino tech is a technology company that provides innovative solutions to businesses and clients.',
-        client: 'Kaino Tech', preview: '#', scope: 'Frontend Developer', nextProject: 'Curi',
+        client: 'Mr Ebuka', preview: '#', scope: 'Frontend Developer', nextProject: 'Curi',
     },
    
    
@@ -163,7 +163,7 @@ export default function ExpModal({ onClose }: { onClose?: () => void }) {
     return (
         <>
             <motion.div
-                className="wm-screen"
+                className="wm-screen mb-3!"
                 role="dialog"
                 aria-modal="true"
                 aria-label="All Experience"
@@ -281,7 +281,7 @@ export default function ExpModal({ onClose }: { onClose?: () => void }) {
                         </div>
 
                         <motion.footer
-                            className="wm-footer "
+                            className="wm-footer  "
                             variants={fromBottom} initial="hidden" animate="visible" custom={1.9}
                         >
                             <span className='max-sm:mb-5!'>SELECTED EXPERIENCE — 2026</span>
