@@ -81,8 +81,7 @@ export default function About() {
                 {/* 3 · "Hi, I'm Michael…" — from the left */}
                 <motion.div variants={fromLeft} custom={2} className="about-bio text-[#2e2b28]!">
                     <p className='text-[#2e2b28]!'>
-                        Hi, I'm <span className="highlight">Michael</span>, a software developer with a thoughtful
-                        approach to building clear, intuitive web & mobile apps, alongside AI agents that solve real problems.
+                        Hi, I'm <span className="highlight">Michael</span> a software Developer. I build scaleable products that actually solve real problems and makes money for businesses and individuals.
                     </p>
                     <span className="work-for-tag  text-[#2e2b28]! ">WEB · MOBILE · AI AGENTS</span>
                 </motion.div>
