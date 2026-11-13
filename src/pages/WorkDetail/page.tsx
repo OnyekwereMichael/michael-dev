@@ -2,6 +2,7 @@
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { useState } from 'react';
 import vendorsapp from '../../assets/vendors.jpeg'
+import signwise from '../../assets/signwise-mockup.svg'
 import curi from '../../assets/WhatsApp Image 2026-10-06 at 10.35.14.jpeg'
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
@@ -45,7 +46,8 @@ export default function WorkDetail() {
     const projects = [
         { id: 1, title: 'Curi', image: curi },
         { id: 2, title: 'Vendors app', image: vendorsapp },
-        { id: 3, title: 'Slider', image: 'https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=500&h=500&fit=crop' },
+        { id: 3, title: 'Signwise', image: signwise },
+        { id: 4, title: 'Slider', image: 'https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=500&h=500&fit=crop' },
         // { id: 4, title: 'Betahaus', image: 'https://images.unsplash.com/photo-1549887534-7051a7b95e72?w=500&h=500&fit=crop' },
     ];
 

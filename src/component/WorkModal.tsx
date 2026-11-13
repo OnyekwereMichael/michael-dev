@@ -6,6 +6,7 @@ import vendorsapp from '../assets/WhatsApp Image 2026-10-10 at 21.37.07.jpeg';
 import veriscore from '../assets/03-Free-MacBook-Pro-Mockup-Low-Perspective.jpg.jpeg';
 import ProjectDetail, { type Project } from './ProjectDetail';
 import whitelist from '../assets/whitelist.svg'
+import signwise from '../assets/signwise-mockup.svg';
 
 const EASE = [0.22, 0.85, 0.32, 1] as const;
 const TITLE = 'ALL WORK';
@@ -22,18 +23,23 @@ const projects: Project[] = [
     {
         number: '02', category: 'E-COMMERCE', year: '2026', title: 'Vendors app', image: vendorsapp,
         overview: 'A comprehensive business management platform designed to help small and medium-sized businesses launch, manage, and scale with confidence.',
-        client: 'Pepple Rex', preview: 'https://www.tryvendorsapp.com/', scope: 'Frontend Developer', nextProject: 'Veriscore',
+        client: 'Pepple Rex', preview: 'https://www.tryvendorsapp.com/', scope: 'Frontend Developer', nextProject: 'Signwise',
     },
     {
-        number: '03', category: 'FINTECH', year: '2026', title: 'Veriscore', image: veriscore,
+        number: '03', category: 'LEGAL TECH', year: '2026', title: 'Signwise', image: signwise,
+        overview: "Signwise turns any contract into a plain-English breakdown in about 30 seconds: what it says, what's risky, and what to ask before you sign. Red flags are highlighted right in the clause, so nobody signs something they don't understand.",
+        client: 'Personal Project', preview: 'https://www.signwise.site/', scope: 'Frontend Developer', nextProject: 'Veriscore',
+    },
+    {
+        number: '04', category: 'FINTECH', year: '2026', title: 'Veriscore', image: veriscore,
         overview: 'A financial scoring tool designed to give clear insights into credit and lending potentials.',
         client: 'Mr.Segun Oyenuga', preview: 'https://veriscore.app/', scope: 'Frontend Developer', nextProject: 'Betahaus',
     },
     {
-        number: '04', category: 'REAL ESTATE', year: '2026', title: 'Whitelist',
+        number: '05', category: 'REAL ESTATE', year: '2026', title: 'Whitelist',
         image: whitelist,
         overview: "Whether you're searching for your dream home or looking to rent out a property, Whitelist makes the process seamless and efficient",
-        client: 'Mr Ebuka & Manuel', preview: 'https://www.whitelistproperties.com/', scope: 'Frontend Developer', nextProject: 'Curi',
+        client: 'Mr Ebuka & Manuel', preview: 'https://salmon-river-06f53330f.3.azurestaticapps.net/', scope: 'Frontend Developer', nextProject: 'Curi',
     },
 ];
 
